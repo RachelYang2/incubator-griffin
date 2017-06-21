@@ -21,38 +21,41 @@ define(['./module'], function (controllers) {
 
         var echarts = require('echarts');
         var formatUtil = echarts.format;
+       
+        $scope.$on('$viewContentLoaded',function(){
+            $scope.pageInit();
+        });
 
-        pageInit();
 
         $scope.orgs = [];
         $scope.dataData = [];
         $scope.finalData = [];
-        function pageInit() {
+        $scope.pageInit = function () {
             $scope.$emit('initReq');
 
 //            var url = $config.uri.heatmap;
             var url_dashboard = $config.uri.dashboard ;
-            // var url_dashboard = 'data.json';
+            // var url_dashboard = './data.json';
             var url_organization = $config.uri.organization;
-            // var url_organization = 'org.json';
-            $http.get(url_organization).success(function(res){
+            // var url_organization = './org.json';
+            $http.get(url_organization).then(function successCallback(res){
                var orgNode = null;
-               angular.forEach(res, function(value,key) {
+               angular.forEach(res.data, function(value,key) {
                     orgNode = new Object();
                     $scope.orgs.push(orgNode);
                     orgNode.name = key;
                     orgNode.assetMap = value;
                });
                $scope.originalOrgs = angular.copy($scope.orgs);
-                $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).success(function(data) {
-//                  $http.get(url_dashboard).success(function(data){
-                    angular.forEach(data.hits.hits, function(sys) {
+                // $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).success(function(data) {
+                 $http.get(url_dashboard).then(function successCallback(response){
+                    angular.forEach(response.data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
                             return a.tmst - b.tmst;
                         }
                     });
-                    $scope.originalData = angular.copy(data);
+                    $scope.originalData = angular.copy(response.data);
 
                     $scope.myData = angular.copy($scope.originalData.hits.hits);
                     $scope.metricName = [];
@@ -117,6 +120,17 @@ define(['./module'], function (controllers) {
                         if (sys.metrics != undefined) {
                             item.children = [];
                             angular.forEach(sys.metrics,function(metric,key){
+                                var timestamp = new Date(metric.timestamp);
+                                // var h = timestamp.getHours();
+                                // var min = timestamp.getMinutes();
+                                // var s = timestamp.getSeconds();
+                                var hour = timestamp.getHours() < 10 ? '0' + timestamp.getHours() : timestamp.getHours();
+                                var min = timestamp.getMinutes() < 10 ? '0' + timestamp.getMinutes() : timestamp.getMinutes(); 
+                                var sec = timestamp.getSeconds() < 10 ? '0' + timestamp.getSeconds() : timestamp.getSeconds();
+                                var y = timestamp.getFullYear();
+                                var m = timestamp.getMonth()+1;
+                                var d = timestamp.getDate();
+                                timestamp = m + '/' + d + '/' + y + ' ' + hour + ':' + min + ':' + sec;
                                 var itemChild = {
                                     id: 'id_' + sysId + '_' + metricId,
                                     name: metric.name,// + '(' + metric.dq + '%)',
@@ -124,6 +138,7 @@ define(['./module'], function (controllers) {
                                     value: 1,
                                     dq: metric.dq,
                                     sysName: sys.name,
+                                    timestamp:timestamp,
                                     itemStyle: {
                                         normal: {
                                             color: '#4c8c6f'
@@ -133,9 +148,9 @@ define(['./module'], function (controllers) {
                                     // target:'self',
                                 };
                                 if (metric.dqfail == 1) {
-                                    itemChild.itemStyle.normal.color = '#ae5732';
+                                    itemChild.itemStyle.normal.color = '#E45A51';
                                 } else {
-                                    itemChild.itemStyle.normal.color = '#005732';
+                                    itemChild.itemStyle.normal.color = '#29C39C';
                                 }
                                 item.children.push(itemChild);
                                 metricId++;
@@ -178,8 +193,13 @@ define(['./module'], function (controllers) {
                 var option = {
 
                     title: {
-                        text: 'Data Quality Metrics Heatmap',
-                        left: 'center'
+                        show:false,
+                        // text: 'Data Quality Metrics Heatmap',
+                        // left: 'center',
+                        // textStyle:{
+                        //     color:'white'
+                        // },
+                        // subtext:'Healthy Unhealthy'
                     },
 
                     backgroundColor: 'transparent',
@@ -188,10 +208,16 @@ define(['./module'], function (controllers) {
                         formatter: function(info) {
                             var dqFormat = info.data.dq>100?'':'%';
                             return [
-                                '<span style="font-size:1.8em;">' + formatUtil.encodeHTML(info.data.sysName) + ' &gt; </span>',
-                                '<span style="font-size:1.5em;">' + formatUtil.encodeHTML(info.data.name)+'</span><br>',
-                                '<span style="font-size:1.5em;">dq : ' + info.data.dq.toFixed(2) + dqFormat + '</span>'
+                            '<span style="font-size:1.5em;">' + formatUtil.encodeHTML(info.data.name)+' &gt; </span>',
+                                '<span style="font-size:1.8em;">' + formatUtil.encodeHTML(info.data.sysName) + '</span><br>',
+                                '<span style="font-size:1.5em;font-weight:bold">DQ : ' + info.data.dq.toFixed(2) + dqFormat + '</span><br>',
+                                '<span style="font-size:1.5em;">Time: '+formatUtil.encodeHTML(info.data.timestamp)+'</span>'
                             ].join('');
+                        },
+                        backgroundColor:'rgba(212,216,219,0.7)',
+                        padding:10,
+                        textStyle:{
+                            color:'#959595'
                         }
                     },
 
@@ -246,7 +272,7 @@ define(['./module'], function (controllers) {
         });
 
         function resizeTreeMap() {
-            $('#chart1').height( $('#mainWindow').height() - $('.bs-component').outerHeight() );
+            $('#chart1').height( $('#mainWindow').height() - $('.bs-component').outerHeight() - 45 );
         }
 
     }]);

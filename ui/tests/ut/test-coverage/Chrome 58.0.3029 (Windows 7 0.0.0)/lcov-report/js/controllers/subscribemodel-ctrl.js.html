@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js\controllers\subscribemodel-ctrl.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">js/controllers/</a> subscribemodel-ctrl.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.19% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>4/183</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/80</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.63% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.19% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>4/183</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*-
+ * Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+&nbsp;
+     http://www.apache.org/licenses/LICENSE-2.0
+&nbsp;
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+&nbsp;
+ */
+&nbsp;
+define(['./module'], function(controllers) {
+    'use strict';
+    controllers.controller('SubscribeModelCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter', <span class="fstat-no" title="function not covered" >function($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {</span>
+<span class="cstat-no" title="statement not covered" >        var dbtreeUrl = $config.uri.dbtree;</span>
+<span class="cstat-no" title="statement not covered" >        var schemaDefinitionUrl = $config.uri.schemadefinition;</span>
+<span class="cstat-no" title="statement not covered" >        var subscribeUrl = $config.uri.getsubscribe;</span>
+<span class="cstat-no" title="statement not covered" >        var allModelsUrl = $config.uri.allModels;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.ruleSystems = $filter('strarr')('modelsystem');</span>
+<span class="cstat-no" title="statement not covered" >        $scope.ruleTypes = $filter('strarr')('modeltype');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $http.get(dbtreeUrl).success(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var dbList = [];</span>
+<span class="cstat-no" title="statement not covered" >            if (data &amp;&amp; data.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                data.forEach(<span class="fstat-no" title="function not covered" >function(db) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    var dbNode = {</span>
+                        name: db.platform,
+                        fullname: db.platform,
+                        l1: true,
+                        children: []
+                    };
+<span class="cstat-no" title="statement not covered" >                    dbList.push(dbNode);</span>
+<span class="cstat-no" title="statement not covered" >                    if (db.systems &amp;&amp; db.systems.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                        db.systems.forEach(<span class="fstat-no" title="function not covered" >function(system) {</span></span>
+<span class="cstat-no" title="statement not covered" >                            var dsNode = {</span>
+                                name: system.name,
+                                fullname: db.platform + '#' + system.name,
+                                l2: true,
+                                children: []
+                            };
+<span class="cstat-no" title="statement not covered" >                            dbNode.children.push(dsNode);</span>
+<span class="cstat-no" title="statement not covered" >                            dsNode.parent = dbNode;</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            if (system.assets &amp;&amp; system.assets.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                                system.assets.sort(<span class="fstat-no" title="function not covered" >function(a, b){</span></span>
+<span class="cstat-no" title="statement not covered" >                                  return (a.name&lt;b.name?-1:(a.name&gt;b.name?1:0));</span>
+                                });
+<span class="cstat-no" title="statement not covered" >                                system.assets.forEach(<span class="fstat-no" title="function not covered" >function(schema) {</span></span>
+<span class="cstat-no" title="statement not covered" >                                    var schemaNode = {</span>
+                                        id: schema.id,
+                                        name: schema.name,
+                                        fullname: db.platform + '#' + system.name + '#' + schema.name,
+                                        l3: true
+                                    };
+<span class="cstat-no" title="statement not covered" >                                    schemaNode.parent = dsNode;</span>
+<span class="cstat-no" title="statement not covered" >                                    dsNode.children.push(schemaNode);</span>
+                                });
+                            }
+                        });
+                    }
+&nbsp;
+                });
+            }
+<span class="cstat-no" title="statement not covered" >            $scope.dbList = dbList;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.dbListTarget = angular.copy(dbList);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $http.get(subscribeUrl + $scope.ntAccount).success(<span class="fstat-no" title="function not covered" >function(data){</span></span>
+<span class="cstat-no" title="statement not covered" >                $scope.oldSubscription = data;</span>
+                //updateModelsTable();
+<span class="cstat-no" title="statement not covered" >                initializeModelsTable();</span>
+                // $scope.changeCB();
+            });
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $http.get(allModelsUrl).success(<span class="fstat-no" title="function not covered" >function(data){</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.allModels = data;</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var findPlatformIndex = <span class="fstat-no" title="function not covered" >function(pl, subscribes){</span></span>
+<span class="cstat-no" title="statement not covered" >            for (var i = 0; i &lt; subscribes.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                if(subscribes[i].platform == pl){</span>
+<span class="cstat-no" title="statement not covered" >                    return i;</span>
+                }
+            };
+<span class="cstat-no" title="statement not covered" >            return -1;</span>
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var findSystemIndex = <span class="fstat-no" title="function not covered" >function(sys, systems){</span></span>
+<span class="cstat-no" title="statement not covered" >            for (var i = 0; i &lt; systems.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                if(systems[i].system == sys){</span>
+<span class="cstat-no" title="statement not covered" >                    return i;</span>
+                }
+            };
+<span class="cstat-no" title="statement not covered" >            return -1;</span>
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var getSubscribes = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >            var subscribes = [];</span>
+<span class="cstat-no" title="statement not covered" >            var checkedList = angular.element('input:checked');</span>
+<span class="cstat-no" title="statement not covered" >            angular.forEach(checkedList, <span class="fstat-no" title="function not covered" >function(item){</span></span>
+<span class="cstat-no" title="statement not covered" >                var value = item.value;</span>
+<span class="cstat-no" title="statement not covered" >                var res = value.split('#');</span>
+<span class="cstat-no" title="statement not covered" >                if(res.length == 2) {</span>
+<span class="cstat-no" title="statement not covered" >                    var pl = res[0];</span>
+<span class="cstat-no" title="statement not covered" >                    var sys = res[1];</span>
+<span class="cstat-no" title="statement not covered" >                    var plIndex = findPlatformIndex(pl, subscribes);</span>
+<span class="cstat-no" title="statement not covered" >                    if(plIndex == -1) {</span>
+<span class="cstat-no" title="statement not covered" >                        var newPlatform = {</span>
+                            "platform": pl,
+                            "selectAll": false,
+                            "systems": [{
+                                "system": sys,
+                                "selectAll": true,
+                                "dataassets": []
+                            }]
+                        }
+<span class="cstat-no" title="statement not covered" >                        subscribes.push(newPlatform);</span>
+                    } else{
+<span class="cstat-no" title="statement not covered" >                        var sysIndex = findSystemIndex(sys, subscribes[plIndex].systems);</span>
+<span class="cstat-no" title="statement not covered" >                        if(sysIndex == -1) {</span>
+<span class="cstat-no" title="statement not covered" >                            var newSys = {</span>
+                                "system": sys,
+                                "selectAll": true,
+                                "dataassets": []
+                            };
+<span class="cstat-no" title="statement not covered" >                            subscribes[plIndex].systems.push(newSys);</span>
+                        }else{
+<span class="cstat-no" title="statement not covered" >                            subscribes[plIndex].systems[sysIndex].selectAll = true;</span>
+                        }
+                    }
+                } else <span class="cstat-no" title="statement not covered" >if(res.length == 3){</span>
+<span class="cstat-no" title="statement not covered" >                    var pl = res[0];</span>
+<span class="cstat-no" title="statement not covered" >                    var sys = res[1];</span>
+<span class="cstat-no" title="statement not covered" >                    var asset = res[2];</span>
+<span class="cstat-no" title="statement not covered" >                    var plIndex = findPlatformIndex(pl, subscribes);</span>
+<span class="cstat-no" title="statement not covered" >                    if(plIndex == -1) {</span>
+<span class="cstat-no" title="statement not covered" >                        var newPlatform = {</span>
+                            "platform": pl,
+                            "selectAll": false,
+                            "systems":[{
+                                "system": sys,
+                                "selectAll": false,
+                                "dataassets": [asset]
+                            }]
+&nbsp;
+                        };
+<span class="cstat-no" title="statement not covered" >                        subscribes.push(newPlatform);</span>
+                    } else{
+<span class="cstat-no" title="statement not covered" >                        var sysIndex = findSystemIndex(sys, subscribes[plIndex].systems);</span>
+<span class="cstat-no" title="statement not covered" >                        if(sysIndex == -1) {</span>
+<span class="cstat-no" title="statement not covered" >                            var newSys = {</span>
+                                "system": sys,
+                                "selectAll": false,
+                                "dataassets": [asset]
+                            };
+<span class="cstat-no" title="statement not covered" >                            subscribes[plIndex].systems.push(newSys);</span>
+                        }else{
+<span class="cstat-no" title="statement not covered" >                            subscribes[plIndex].systems[sysIndex].dataassets.push(asset);</span>
+                        }
+                    }
+                }
+            })
+<span class="cstat-no" title="statement not covered" >            return subscribes;</span>
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.$on('$viewContentLoaded', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.$emit('initReq');</span>
+<span class="cstat-no" title="statement not covered" >            resizeWindow();</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.$on('resizeHandler', <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if ($route.current.$$route.controller == "SubscribeModelCtrl") {</span>
+<span class="cstat-no" title="statement not covered" >                resizeWindow();</span>
+            }
+        });
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function resizeWindow() {</span>
+<span class="cstat-no" title="statement not covered" >            console.log(window.innerHeight);</span>
+<span class="cstat-no" title="statement not covered" >            console.log($('.formStep').offset().top);</span>
+<span class="cstat-no" title="statement not covered" >            console.log($('#footerwrap').outerHeight());</span>
+<span class="cstat-no" title="statement not covered" >                    $('.formStep').innerHeight(window.innerHeight  -  $('.formStep').offset().top - $('#footerwrap').outerHeight());</span>
+<span class="cstat-no" title="statement not covered" >                    $('fieldset').height(window.innerHeight  -  $('fieldset').offset().top - $('#footerwrap').outerHeight()- $('.btn-container').height() -80);</span>
+<span class="cstat-no" title="statement not covered" >                    $('.y-scrollable').css({</span>
+                        'max-height': $('fieldset').height()
+                    });
+&nbsp;
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.form = {</span>
+            submit: <span class="fstat-no" title="function not covered" >function(form) {</span>
+<span class="cstat-no" title="statement not covered" >                var subscribes = angular.copy(getSubscribes());</span>
+<span class="cstat-no" title="statement not covered" >                var sid = ($scope.oldSubscription=="")?null:$scope.oldSubscription._id;</span>
+<span class="cstat-no" title="statement not covered" >                var requestData = {</span>
+                    "id": sid,
+                    // "id": $scope.ntAccount,
+                    "ntaccount": $scope.ntAccount,
+                    "subscribes": subscribes
+                };
+<span class="cstat-no" title="statement not covered" >                this.data = requestData;</span>
+                // $('#confirm').modal('show');
+<span class="cstat-no" title="statement not covered" >                var newsubscribeUrl = $config.uri.newsubscribe;</span>
+<span class="cstat-no" title="statement not covered" >                $http.post(newsubscribeUrl, this.data).success(<span class="fstat-no" title="function not covered" >function(data){</span></span>
+<span class="cstat-no" title="statement not covered" >                    $location.path('/mydashboard').replace();</span>
+                }).error(<span class="fstat-no" title="function not covered" >function(data){</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("Fail to new subscription.");</span>
+                });
+            },
+            save: <span class="fstat-no" title="function not covered" >function(form) {</span>
+<span class="cstat-no" title="statement not covered" >                var newsubscribeUrl = $config.uri.newsubscribe;</span>
+<span class="cstat-no" title="statement not covered" >                $http.post(newsubscribeUrl, this.data).success(<span class="fstat-no" title="function not covered" >function(data){</span></span>
+<span class="cstat-no" title="statement not covered" >                    $('#confirm').on('hidden.bs.modal', <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        $('#confirm').off('hidden.bs.modal');</span>
+<span class="cstat-no" title="statement not covered" >                        $location.path('/mydashboard').replace();</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.$apply();</span>
+                    });
+<span class="cstat-no" title="statement not covered" >                    $('#confirm').modal('hide');</span>
+                }).error(<span class="fstat-no" title="function not covered" >function(data){</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("Fail to new subscription.");</span>
+                });
+            }
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var findAssetId = <span class="fstat-no" title="function not covered" >function(assetname, sysname, pfname, dbList){</span></span>
+<span class="cstat-no" title="statement not covered" >            for (var i = 0; i &lt; dbList.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                var platform = dbList[i];</span>
+<span class="cstat-no" title="statement not covered" >                if(platform.name == pfname){</span>
+<span class="cstat-no" title="statement not covered" >                    for (var j = 0; j &lt; platform.children.length; j++) {</span>
+<span class="cstat-no" title="statement not covered" >                        var sys = platform.children[j];</span>
+<span class="cstat-no" title="statement not covered" >                        if(sys.name == sysname){</span>
+<span class="cstat-no" title="statement not covered" >                            for (var k = 0; k &lt; sys.children.length; k++) {</span>
+<span class="cstat-no" title="statement not covered" >                                var asset = sys.children[k];</span>
+<span class="cstat-no" title="statement not covered" >                                if(assetname==asset.name) {</span>
+<span class="cstat-no" title="statement not covered" >                                    return asset.id;</span>
+                                }
+                            };
+                        }
+                    };
+                }
+            };
+<span class="cstat-no" title="statement not covered" >            return -1;</span>
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var getModelsInfo = <span class="fstat-no" title="function not covered" >function(assetname, sysname, allModels) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var result = [];</span>
+<span class="cstat-no" title="statement not covered" >            angular.forEach(allModels, <span class="fstat-no" title="function not covered" >function(model) {</span></span>
+<span class="cstat-no" title="statement not covered" >                if(model.assetName == assetname</span>
+                    &amp;&amp; $scope.ruleSystems[model.system] == sysname) {
+<span class="cstat-no" title="statement not covered" >                    var item = {</span>
+                        'systemName': sysname,
+                        'assetName': assetname,
+                        'modelName': model.name,
+                        'modelType': $scope.ruleTypes[model.type],
+                        'desc': model.description
+                    }
+<span class="cstat-no" title="statement not covered" >                    result.push(item);</span>
+                }
+            });
+<span class="cstat-no" title="statement not covered" >            return result;</span>
+          }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var initializeModelsTable = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >            if($scope.oldSubscription == undefined || $scope.oldSubscription == "" || $scope.oldSubscription.subscribes == undefined){</span>
+<span class="cstat-no" title="statement not covered" >                return;</span>
+            }
+<span class="cstat-no" title="statement not covered" >            $scope.schemaCollection = [];</span>
+<span class="cstat-no" title="statement not covered" >            var subscribes = $scope.oldSubscription.subscribes;</span>
+<span class="cstat-no" title="statement not covered" >            angular.forEach(subscribes, <span class="fstat-no" title="function not covered" >function(platform){</span></span>
+<span class="cstat-no" title="statement not covered" >                angular.forEach(platform.systems, <span class="fstat-no" title="function not covered" >function(sys){</span></span>
+<span class="cstat-no" title="statement not covered" >                    angular.forEach(sys.dataassets, <span class="fstat-no" title="function not covered" >function(asset){</span></span>
+<span class="cstat-no" title="statement not covered" >                        var models = getModelsInfo(asset, sys.system, $scope.allModels);</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.schemaCollection = $scope.schemaCollection.concat(models);</span>
+                    })
+                })
+            });
+&nbsp;
+          };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var updateModelsTable = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.schemaCollection = [];</span>
+<span class="cstat-no" title="statement not covered" >            var subscribes = angular.copy(getSubscribes());</span>
+<span class="cstat-no" title="statement not covered" >            angular.forEach(subscribes, <span class="fstat-no" title="function not covered" >function(platform){</span></span>
+<span class="cstat-no" title="statement not covered" >                angular.forEach(platform.systems, <span class="fstat-no" title="function not covered" >function(sys){</span></span>
+<span class="cstat-no" title="statement not covered" >                    angular.forEach(sys.dataassets, <span class="fstat-no" title="function not covered" >function(asset){</span></span>
+<span class="cstat-no" title="statement not covered" >                        var models = getModelsInfo(asset, sys.system, $scope.allModels);</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.schemaCollection = $scope.schemaCollection.concat(models);</span>
+                    })
+                })
+            });
+&nbsp;
+          };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.isChecked = <span class="fstat-no" title="function not covered" >function(node) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if($scope.oldSubscription == undefined || $scope.oldSubscription == "" || $scope.oldSubscription.subscribes == undefined){</span>
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                var oldSubscribes = $scope.oldSubscription.subscribes;</span>
+<span class="cstat-no" title="statement not covered" >                if(node.l2){</span>
+<span class="cstat-no" title="statement not covered" >                    for (var i = 0; i &lt; oldSubscribes.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                        var subscribe = oldSubscribes[i];</span>
+<span class="cstat-no" title="statement not covered" >                        if(subscribe.platform == node.parent.name){</span>
+<span class="cstat-no" title="statement not covered" >                            for (var j = 0; j &lt; subscribe.systems.length; j++) {</span>
+<span class="cstat-no" title="statement not covered" >                                var sys = subscribe.systems[j];</span>
+<span class="cstat-no" title="statement not covered" >                                if(sys.system == node.name &amp;&amp; sys.selectAll){</span>
+<span class="cstat-no" title="statement not covered" >                                    return true;</span>
+                                }
+                            };
+                        }
+                    };
+                }else <span class="cstat-no" title="statement not covered" >if(node.l3){</span>
+<span class="cstat-no" title="statement not covered" >                    for (var i = 0; i &lt; oldSubscribes.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                        var subscribe = oldSubscribes[i];</span>
+<span class="cstat-no" title="statement not covered" >                        if(subscribe.platform == node.parent.parent.name){</span>
+<span class="cstat-no" title="statement not covered" >                            for (var j = 0; j &lt; subscribe.systems.length; j++) {</span>
+<span class="cstat-no" title="statement not covered" >                                var sys = subscribe.systems[j];</span>
+<span class="cstat-no" title="statement not covered" >                                if(sys.system == node.parent.name){</span>
+<span class="cstat-no" title="statement not covered" >                                    for (var k = 0; k &lt; sys.dataassets.length; k++) {</span>
+<span class="cstat-no" title="statement not covered" >                                        var asset = sys.dataassets[k];</span>
+<span class="cstat-no" title="statement not covered" >                                        if(asset == node.name) {</span>
+<span class="cstat-no" title="statement not covered" >                                            return true;</span>
+                                        }
+                                    };
+                                }
+                            };
+                        }
+                    };
+                }
+            }
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        };
+&nbsp;
+        // setTimeout(function() {
+        //     updateModelsTable();
+        // }, 1000);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.changeCB = <span class="fstat-no" title="function not covered" >function(node, evt) {</span></span>
+            // $('input[type="checkbox"]').change(function(e) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                  var checked = $(evt.target).prop("checked"),</span>
+                      container = $(evt.target).parent(),
+                      siblings = container.siblings();
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                  container.find('input[type="checkbox"]').prop({</span>
+                    indeterminate: false,
+                    checked: checked
+                  });
+&nbsp;
+&nbsp;
+<span class="fstat-no" title="function not covered" >                   function checkSiblings(el) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var parent = el.parent().parent().parent(),</span>
+                        all = true;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    el.siblings().each(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                      return all = ($(this).children('input[type="checkbox"]').prop("checked") === checked);</span>
+                    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    if (all &amp;&amp; checked) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                      parent.children('input[type="checkbox"]').prop({</span>
+                        indeterminate: false,
+                        checked: checked
+                      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                      checkSiblings(parent);</span>
+&nbsp;
+                    } else <span class="cstat-no" title="statement not covered" >if (all &amp;&amp; !checked) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                      parent.children('input[type="checkbox"]').prop("checked", checked);</span>
+<span class="cstat-no" title="statement not covered" >                      parent.children('input[type="checkbox"]').prop("indeterminate", (parent.find('input[type="checkbox"]:checked').length &gt; 0));</span>
+<span class="cstat-no" title="statement not covered" >                      checkSiblings(parent);</span>
+&nbsp;
+                    } else {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                      el.parents("li").children('input[type="checkbox"]').prop({</span>
+                        indeterminate: true,
+                        checked: false
+                      });
+&nbsp;
+                    }
+&nbsp;
+                  };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                  checkSiblings(container);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                  updateModelsTable();</span>
+            //}
+            // setTimeout(function() {
+            //     updateModelsTable();
+            // }, 300);
+            //updateModelsTable();
+        }
+&nbsp;
+&nbsp;
+&nbsp;
+    }]);
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 21 2017 13:26:09 GMT+0800 (China Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

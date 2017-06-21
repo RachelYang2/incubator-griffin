@@ -23,7 +23,7 @@ define(['./module'], function (services) {
 
 //    var BACKEND_SERVER = 'http://10.149.247.156:38080';
 //      var BACKEND_SERVER = 'http://localhost:8080';
-      var BACKEND_SERVER = '';
+      var BACKEND_SERVER = 'http://localhost:8080';
       var API_ROOT_PATH = '/api/v1';
 
 //      var ES_SERVER = 'http://10.149.247.156:59200';
@@ -60,11 +60,12 @@ define(['./module'], function (services) {
 
 
               metricsByOrg:'',
-//              organization:'/org.json',
-//              dashboard:'/dashboard.json',
+              organization:'./org.json',
+              dashboard:'./data.json',
 
-              organization:BACKEND_SERVER + '/orgWithMetrics',
-              dashboard:ES_SERVER+'/griffin/accuracy/_search?pretty&filter_path=hits.hits._source',
+              // organization:BACKEND_SERVER + '/orgWithMetrics',
+              // dashboard:'/data.json',
+              // dashboard:ES_SERVER+'/griffin/accuracy/_search?pretty&filter_path=hits.hits._source',
               metricsample: BACKEND_SERVER + API_ROOT_PATH + '/metrics/sample',
               metricdownload: BACKEND_SERVER + API_ROOT_PATH + '/metrics/download',
 

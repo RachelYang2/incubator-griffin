@@ -24,7 +24,7 @@ define(['./module'], function (controllers) {
       }else{
         window.location.replace('/login/login.html');
       }
-
+      $scope.timestamp = new Date();
       var adminGroup = ['lzhixing', 'yosha', 'wenzhao', 'aiye', 'lshao'];
 	    $rootScope.adminAccess = (adminGroup.indexOf($scope.ntAccount)!=-1);
 

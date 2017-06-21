@@ -25,7 +25,7 @@ define(['./module'], function (controllers) {
         $scope.$emit('initReq');
 
         var getModelUrl = $config.uri.getModel+"/"+$routeParams.modelname;
-        $http.get(getModelUrl).success(function(data){
+        $http.get(getModelUrl).then(function successCallback(data){
           $scope.ruleData = data;
           $scope.sourceLength = $scope.ruleData.evaluateRule.rules.split('AND').length;
           console.log($scope.sourceLength);
@@ -42,10 +42,13 @@ define(['./module'], function (controllers) {
 //          $scope.targetLength = $scope.ruleData.evaluateRule.rules.split(';').length;
 
           $scope.getNumber = function(n){return new Array(n);}
-        }).error(function(data){
-          // errorMessage(0, 'Save model failed, please try again!');
+        },function errorCallback(data){
           toaster.pop('error', data.message);
         });
+        // }).error(function(data){
+        //   // errorMessage(0, 'Save model failed, please try again!');
+        //   toaster.pop('error', data.message);
+        // });
 
         $scope.anTypes = ['', 'History Trend Detection', 'Bollinger Bands Detection', 'Deviation Detection'];
 
@@ -71,7 +74,7 @@ define(['./module'], function (controllers) {
         var answer = confirm('Are you sure you want to deploy this model to production?')
 
         if(answer){
-          $http.get(deployModelUrl).success(function(){
+          $http.get(deployModelUrl).then(function successCallback(data){
             $scope.ruleData.basic.status = 2;
             toaster.pop('info', 'Your model has been deployed to prduction!');
           });

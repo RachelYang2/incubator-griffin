@@ -17,8 +17,6 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('FooterCtrl', ['$scope', '$http', '$config', '$location', '$cookies', '$interval', function ($scope, $http, $config, $location, $cookies, $interval) {
       console.log('Footer controller');
-      $scope.timestamp = new Date();
-
       var start = 0, number = 3;
       retrieveNotifications();
       $interval(retrieveNotifications, 60000);
@@ -47,10 +45,10 @@ define(['./module'], function (controllers) {
 
       function retrieveNotifications(){
         var notificationUrl = $config.uri.getnotifications;
-        $http.get(notificationUrl).success(function(data) {
-          // $scope.allNotifications = data.slice(0, 15);
-          $scope.notifications = data.slice(0, 3);
-        });
+        // $http.get(notificationUrl).then(function successCallback(data) {
+        //   // $scope.allNotifications = data.slice(0, 15);
+        //   $scope.notifications = data.slice(0, 3);
+        // });
       }
 
     }]);

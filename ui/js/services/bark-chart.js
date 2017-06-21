@@ -76,7 +76,8 @@ define(['./module'], function (services) {
         left: 'center',
         textStyle: {
             fontWeight: 'normal',
-            fontSize: 15
+            fontSize: 15,
+            color:'white'
         }
       },
       backgroundColor: 'transparent',
@@ -100,7 +101,15 @@ define(['./module'], function (services) {
               splitLine: {
                   show: false
               },
-              splitNumber: 2
+              splitNumber: 2,
+              nameTextStyle:{
+                color:'#fff'
+              },
+              axisLine:{
+                lineStyle:{
+                  color:'#fff'
+                }
+              }
       },
       yAxis : {
               type : 'value',
@@ -109,7 +118,20 @@ define(['./module'], function (services) {
               axisLabel: {
                   formatter: formatter_value
               },
-              splitNumber: 2
+              splitLine:{
+                lineStyle:{
+                  type:'dashed'
+                }
+              },
+              splitNumber: 2,
+              nameTextStyle:{
+                color:'#fff'
+              },
+              axisLine:{
+                lineStyle:{
+                  color:'#fff',
+                }
+              }
       }
     };
     option.series = getSeries(metric);
@@ -176,7 +198,15 @@ define(['./module'], function (services) {
               splitLine: {
                   show: false
               },
-              splitNumber: 2
+              splitNumber: 2,
+              nameTextStyle:{
+                color:'#fff'
+              },
+              axisLine:{
+                lineStyle:{
+                  color:'#fff'
+                }
+              }
       },
       yAxis : {
               type : 'value',
@@ -185,7 +215,20 @@ define(['./module'], function (services) {
               axisLabel: {
                   formatter: formatter_value
               },
-              splitNumber: 2
+              splitNumber: 2,
+              splitLine:{
+                lineStyle:{
+                  type:'dashed'
+                }
+              },
+              nameTextStyle:{
+                color:'#fff'
+              },
+              axisLine:{
+                lineStyle:{
+                  color:'#fff',
+                }
+              }
       }
     };
     option.series = getSeries(metric);
@@ -277,14 +320,15 @@ define(['./module'], function (services) {
           smooth:true,
           lineStyle: {
             normal: {
-                color: '#d48265'
+                color: '#2D6AB4'
             }
           },
           itemStyle: {
               normal: {
-                  color: '#d48265'
+                  color: '#2D6AB4',
               }
-          }
+          },
+
       });
       return series;
   }

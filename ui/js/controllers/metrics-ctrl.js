@@ -29,23 +29,24 @@ define(['./module'], function(controllers) {
           var url_dashboard = $config.uri.dashboard ;
           var url_organization = $config.uri.organization;
 
-          $http.get(url_organization).success(function(res){
+          $http.get(url_organization).then(function successCallback(res){
                var orgNode = null;
-               angular.forEach(res, function(value,key) {
+               angular.forEach(res.data, function(value,key) {
                     orgNode = new Object();
                     $scope.orgs.push(orgNode);
                     orgNode.name = key;
                     orgNode.assetMap = value;
                });
                $scope.originalOrgs = angular.copy($scope.orgs);
-               $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).success(function(data) {
-                    angular.forEach(data.hits.hits, function(sys) {
+               $http.get(url_dashboard).then(function successCallback(data){
+               // $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
+                    angular.forEach(data.data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
                             return a.tmst - b.tmst;
                         }
                     });
-                    $scope.originalData = angular.copy(data);
+                    $scope.originalData = angular.copy(data.data);
 
                     $scope.myData = angular.copy($scope.originalData.hits.hits);
                     $scope.metricName = [];
@@ -122,6 +123,7 @@ define(['./module'], function(controllers) {
                     $('#thumbnail'+parentIndex+'-'+index).get(0).style.height = $scope.chartHeight;
                     var thumbnailChart = echarts.init($('#thumbnail'+parentIndex+'-'+index).get(0), 'dark');
                     thumbnailChart.setOption($barkChart.getOptionThum(metric));
+                    console.log($barkChart.getOptionThum(metric));
                 });
             });
         }

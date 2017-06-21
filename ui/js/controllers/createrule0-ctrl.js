@@ -19,7 +19,7 @@ define(['./module'], function (controllers) {
       console.log('Create rule 0 controller');
       $scope.publishURL = document.location.origin;
 
-      $scope.click = function(type){
+      $scope.clickType = function(type){
         $location.path('/createrule-' + type);
       }
       $scope.$on('$viewContentLoaded', function(){

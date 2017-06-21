@@ -20,6 +20,8 @@ define(['./app'], function(app) {
 
         $routeProvider.when('/', {
             redirectTo: '/health'
+            // templateUrl: '/pages/health/health.html',
+            // controller: 'HealthCtrl'
         });
 
         $routeProvider.when('/health', {

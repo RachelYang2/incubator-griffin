@@ -69,7 +69,7 @@ define(['./module'], function (controllers) {
           var url = $config.uri.getInstances + 'BA/' + row.jobName + '/'+number+'/10';
           $http.get(url).success(function(data){
               // row.instances = data;
-              row.currentInstances = data;
+              row.currentInstances = data; 
               $('#'+p_index+'-'+number).addClass('page-active');
               $('#'+p_index+'-'+number).siblings().removeClass('page-active');
           });

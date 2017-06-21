@@ -22,7 +22,7 @@ define(['./module'], function(controllers) {
         var dbtreeUrl = $config.uri.dbtree;
         var schemaDefinitionUrl = $config.uri.schemadefinition;
 
-        $http.get(dbtreeUrl).success(function(data) {
+        $http.get(dbtreeUrl).then(function successCallback(data) {
             var dbList = [];
             if (data && data.length > 0) {
                 data.forEach(function(db) {
@@ -222,7 +222,7 @@ define(['./module'], function(controllers) {
                 console.log(JSON.stringify($scope.form.data));
 
                 var newModel = $config.uri.newAnomalyModel;
-                $http.post(newModel, this.data).success(function(data) {
+                $http.post(newModel, this.data).then(function successCallback(data) {
                 	// if(data.status=='0')
                 	// {
 	                  $('#confirm-an').on('hidden.bs.modal', function(e) {

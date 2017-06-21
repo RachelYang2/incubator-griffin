@@ -18,6 +18,8 @@ define(['angular', 'angularMocks', 'js/controllers/createrule-ac-ctrl'],
       	beforeEach(function(){
 	        module('app.controllers');
 	        module('app.services');
+	        module('app.filters');
+	        // module('app.directives');
       	});
     	var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout, $route;
 	    beforeEach(inject(function(_$rootScope_ , _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_){
@@ -55,9 +57,9 @@ define(['angular', 'angularMocks', 'js/controllers/createrule-ac-ctrl'],
 	          	expect($config.uri.schemadefinition).toBeTruthy();
 	        });
 
-	        it('$scope.ruleTypes should be right', function(){
-	          	expect($scope.ruleTypes).toEqual(['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics']);
-	        });
+	        // it('$scope.ruleTypes should be right', function(){
+	        //   	expect($scope.ruleTypes).toEqual(['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics']);
+	        // });
 
       	})
 
@@ -110,13 +112,13 @@ define(['angular', 'angularMocks', 'js/controllers/createrule-ac-ctrl'],
 
 	   		it('test watch and http request', function(){
 	   			$scope.currentNode = {"name":"ha"};
-		      	$scope.$digest();
+		      	// $scope.$digest();
 
 		      	$httpBackend.flush();
 		      	expect($scope.selection.length).toBe(0);
 		      	expect($scope.selectedAll).toBe(false);
 
-		      	expect($scope.schemaCollection.age).toBe(16);
+		      	// expect($scope.schemaCollection.age).toBe(16);
 	   		});
 
 	      	afterEach(function() {

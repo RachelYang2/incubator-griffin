@@ -12,12 +12,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['angular', 'angularMocks', 'js/controllers/viewrule-ctrl'],
+define(['angular', 'angularMocks','angularRoute', 'js/controllers/viewrule-ctrl'],
   function(angular, mocks, ViewRuleCtrl) {
     describe('Test /js/controllers/viewrule-ctrl.js', function(){
       	beforeEach(function(){
 	        module('app.controllers');
 	        module('app.services');
+	        module('app.filters');
+	        module('ngRoute');
       	});
     	var $scope, $rootScope, $controller, $filter, $httpBackend, $config, $location, toaster, $timeout, $compile;
 
@@ -50,21 +52,21 @@ define(['angular', 'angularMocks', 'js/controllers/viewrule-ctrl'],
 	        });
       	})
 
-      	describe("httpGet $config.uri.rulemetric test",function(){
-	        beforeEach(function(){
-	            $httpBackend.when('GET', $config.uri.rulemetric).respond({"age": 16,"name": "li"});
-	            $httpBackend.flush();
-	        });
+     //  	describe("httpGet $config.uri.rulemetric test",function(){
+	    //     beforeEach(function(){
+	    //         $httpBackend.when('GET', $config.uri.rulemetric).respond({"age": 16,"name": "li"});
+	    //         $httpBackend.flush();
+	    //     });
 
-	        it('http response', function(){
-	          // expect($scope.dbList).toBeTruthy();
-	        });
+	    //     it('http response', function(){
+	    //       // expect($scope.dbList).toBeTruthy();
+	    //     });
 
-	      	afterEach(function() {
-	        	$httpBackend.verifyNoOutstandingExpectation();
-	        	$httpBackend.verifyNoOutstandingRequest();
-	      	});
-	    })
+	    //   	afterEach(function() {
+	    //     	$httpBackend.verifyNoOutstandingExpectation();
+	    //     	$httpBackend.verifyNoOutstandingRequest();
+	    //   	});
+	    // });
 
 
     });

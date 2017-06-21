@@ -75,7 +75,7 @@ limitations under the License.
 }
 
 .well .side-date{
-	color: white;
+	color: #959595;
 	/*position: absolute;*/
 	/*left: 80px;*/
 	/*margin-left: 10px;*/
@@ -89,20 +89,20 @@ limitations under the License.
 }
 
 a>.side-name:hover{
-	color: #b2c831;
+	color: #fff;
 	/*position: absolute;*/
 	/*left: 210px;*/
 	/*margin-left: 20px;*/
 }
 
 .well .side-percent{
-	color: #40bf80;
+	color: #29C39C;
 	/*position: absolute;*/
 	/*left: 390px;*/
 }
 
 .well .side-percent-red{
-	color: #f00;
+	color: #E45A51;
 }
 
 #gprs{

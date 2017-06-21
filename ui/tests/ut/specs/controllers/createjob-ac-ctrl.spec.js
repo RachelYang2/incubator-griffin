@@ -19,6 +19,7 @@ define(['angular', 'angularMocks', 'js/controllers/createjob-ac-ctrl'],
       	beforeEach(function(){
 	        module('app.controllers');
 	        module('app.services');
+	        module('app.filters');
       	});
     	var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout, $route;
 

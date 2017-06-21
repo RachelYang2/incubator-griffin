@@ -39,13 +39,18 @@ define(['./module'], function(controllers) {
             // $('.formStep').css({height: 800});
         });
         var getMeasureUrl = $config.uri.getMeasuresByOwner+$scope.ntAccount;
-        $http.get(getMeasureUrl).success(function(res){
-            angular.forEach(res,function(measure){
+
+        $http({
+            method: 'GET',
+            url: getMeasureUrl
+        }).then(function successCallback(response) {
+            angular.forEach(response,function(measure){
                 $scope.Measures.push(measure);
-            })
+            });
             console.log($scope.Measures);
             $scope.measure = 0;
-        })
+            }, function errorCallback(response) {
+         });
 
 
 
@@ -123,52 +128,32 @@ define(['./module'], function(controllers) {
             },
 
             save: function() {
-
-
-                //::TODO: Need to save the data to backend with POST/PUT method
-                console.log(JSON.stringify($scope.form.data));
-
-//                var newModel = $config.uri.newAccuracyModel;
-//                var BACKEND_SERVER = '';
                 var date = new Date();
                 var month = date.getMonth()+1;
                 var timestamp = Date.parse(date);
                 timestamp = timestamp / 1000;
                 var time = date.toDateString()+' '+date.toLocaleTimeString();
-//                var jobName = $scope.Measures[$scope.measure] + '-BA-' + $scope.ntAccount + '-' + date.getFullYear() + '-'+ month + '-'+date.getDate();
                 var jobName = $scope.Measures[$scope.measure] + '-BA-' + $scope.ntAccount + '-' + time;
-
                 var newJob = $config.uri.addJobs + this.data.groupName + '/' + jobName + '/' + $scope.Measures[$scope.measure];
                 console.log(newJob);
                 console.log(this.data);
-                $http.post(newJob, this.data).success(function(data) {
-                	// if(data.status=='0')
-                	// {
-                	  console.log(data);
-                      // if(data=='fail'){
-                      //     toaster.pop('error', 'Please modify the name of job, because there is already a same model in database ', data.message);
-                      //     return;
-                      // }
 
-	                  $('#confirm-job').on('hidden.bs.modal', function(e) {
-	                      $('#confirm-job').off('hidden.bs.modal');
-	                      $location.path('/jobs').replace();
-	                      $scope.$apply();
-	                  });
-	                	$('#confirm-job').modal('hide');
-	                // }
-                	// else
-                	// {
-                	// 	errorMessage(0, data.result);
-                	// }
-
-                }).error(function(data){
-                  // errorMessage(0, 'Save model failed, please try again!');
-                  toaster.pop('error', 'Save job failed, please try again!', data.message);
+                $http({
+                    method: 'POST',
+                    url: newJob,
+                    data:this.data
+                }).then(function successCallback(response) {
+                    console.log(response);
+                    $('#confirm-job').on('hidden.bs.modal', function(e) {
+                        $('#confirm-job').off('hidden.bs.modal');
+                        $location.path('/jobs').replace();
+                        $scope.$apply();
+                    });
+                    $('#confirm-job').modal('hide');
+                }, function errorCallback(response) {
+                    toaster.pop('error', 'Save job failed, please try again!', response.message);
                 });
-
             },
-
         }
 
         var errorMessage = function(i, msg) {

@@ -793,22 +793,22 @@ ul#jstwitter li a{
 
 /**********Link Styling**********/
 a {
-  color: #b2c831;
+  color: #959595;
   text-decoration: none;
 }
 
 a:hover {
-  color: #dff948;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .bark-link {
-  color: #b2c831;
-  text-decoration: underline;
+  color: #959595;
+  text-decoration: none;
 }
 
 .bark-link:hover {
-  color: #dff948;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -1069,3 +1069,4 @@ tbody {
   border-color: transparent;
   cursor: default;
 }
+

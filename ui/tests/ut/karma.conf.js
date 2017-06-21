@@ -27,23 +27,27 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'requirejs'],
 
-
+    // list of files / patterns to load in the browser
     files: [
       'tests/ut/test-main.js',
+      // 'js/routes.js',
       {pattern:'bower_components/**/*.js', included:false},
       {pattern:'node_modules/angular-mocks/angular-mocks.js', included:false},
       {pattern: 'js/**/*.js', included: false},
+      {pattern:'js/routes.js',included:false},
       {pattern: 'tests/**/*spec.js', included: false}
     ],
+
 
 
     // list of files to exclude
     exclude: [
       'js/main.js',
       'js/bs.js',
-      'js/routes.js',
+      // 'js/routes.js',
       'bower_components/**/*test*/**/*.js',
       'bower_components/**/*spec.js',
+
       // 'node_modules/**/*spec.js',
       // 'node_modules/**/*spec*/**/*.js',
       // 'node_modules/**/*test.js'
@@ -89,6 +93,9 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
+    // client: {
+    //   requireJsShowNoTimestampsError: false
+    // },
 
 
     // Continuous Integration mode

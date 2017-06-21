@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js\controllers\createdataasset-ctrl.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">js/controllers/</a> createdataasset-ctrl.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.08% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/59</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.88% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.08% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/59</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*-
+ * Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+&nbsp;
+     http://www.apache.org/licenses/LICENSE-2.0
+&nbsp;
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+&nbsp;
+ */
+&nbsp;
+define(['./module'], function (controllers) {
+    'use strict';
+    controllers.controller('CreateDataAssetCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter', <span class="fstat-no" title="function not covered" >function ($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.currentStep = 1;</span>
+&nbsp;
+        // $scope.platformOptions = ['Teradata', 'Apollo'];
+        // $scope.systemOptions = ['Sojourner', 'SiteSpeed', 'Bullseye', 'PDS', 'GPS'];
+        //$scope.assetTypeOptions = ['hdfsfile', 'hivetable'];
+<span class="cstat-no" title="statement not covered" >        $scope.assetTypeOptions = ['hivetable'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.formatTypeOptions = ['yyyyMMdd', 'yyyy-MM-dd','HH'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.regex = '^\\/(?:[0-9a-zA-Z\\_\\-\\.]+\\/?)+';</span>
+&nbsp;
+        // $scope.regex = new RegExp('^\\/(?:[0-9a-zA-Z\\_\\-\\.]+\\/?)+');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var allModels = $config.uri.dbtree;</span>
+<span class="cstat-no" title="statement not covered" >        $http.get(allModels).success(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.platformOptions = data;</span>
+        });
+&nbsp;
+        //$scope.platformOptions = [{"id":null,"platform":"Teradata","systems":[{"id":null,"name":"gdw_tables","assets":[{"id":108,"name":"dw_bid"},{"id":109,"name":"dw_trans"}]}]},{"id":null,"platform":"Apollo","systems":[{"id":null,"name":"Sojourner","assets":[{"id":22,"name":"ubi_event"}]},{"id":null,"name":"SiteSpeed","assets":[{"id":21,"name":"sitespeed"}]},{"id":null,"name":"PDS","assets":[{"id":20,"name":"last_categories_accessed"}]},{"id":null,"name":"Bullseye","assets":[{"id":1,"name":"be_view_event_queue"},{"id":2,"name":"be_search_event_queue"},{"id":3,"name":"be_item_watch_event_queue"},{"id":4,"name":"be_bid_event_queue"},{"id":5,"name":"be_transaction_event_queue"},{"id":6,"name":"dmg"},{"id":7,"name":"loyaltysgmnt"},{"id":8,"name":"cust_dna_cat_score"},{"id":9,"name":"badge_interest"},{"id":10,"name":"cust_dna_vq_feed"},{"id":11,"name":"user_dna"},{"id":12,"name":"adchoice_user_pref"},{"id":13,"name":"cust_dna_vq_cat_feed"},{"id":14,"name":"cpcp_dealsv17"},{"id":15,"name":"bbe_tbl_trx"},{"id":17,"name":"bbe_tbl_neg"},{"id":16,"name":"bbe_tbl_neu"},{"id":19,"name":"rtm_segment_dict"},{"id":18,"name":"bbe_tbl_pos"}]}]}];
+<span class="cstat-no" title="statement not covered" >        $scope.systemOptions = $filter('strarr')('modelsystem');/</span>/['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
+&nbsp;
+        // $scope.getSystemOptions = function(platformIndex){
+        //     if(platformIndex==undefined){
+        //         $scope.systemOptions = [];
+        //     }else{
+        //         $scope.systemOptions = $scope.platformOptions[platformIndex].systems;
+        //     }
+        // };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.updateHdfsPath = <span class="fstat-no" title="function not covered" >function(typeIndex){</span></span>
+<span class="cstat-no" title="statement not covered" >            if(typeIndex != 0 ){</span>
+<span class="cstat-no" title="statement not covered" >                $scope.form.basic.path = '';</span>
+            }
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	    $scope.addSchema = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >	        $scope.form.basic.schema.push({</span>
+	            name: '',
+	            type: 'string',
+	            desc: '',
+	            sample: ''
+	        });
+	    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      $scope.addPatitionColumn = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >	        $scope.form.basic.partitions.push({</span>
+	            name: '',
+	            format: "yyyyMMdd"
+	        });
+	    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	    $scope.deleteSchema = <span class="fstat-no" title="function not covered" >function(index) {</span></span>
+<span class="cstat-no" title="statement not covered" >	        $scope.form.basic.schema.splice(index, 1);</span>
+	    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      $scope.deletePartition = <span class="fstat-no" title="function not covered" >function(index) {</span></span>
+<span class="cstat-no" title="statement not covered" >	        $scope.form.basic.partitions.splice(index, 1);</span>
+	    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.$on('$viewContentLoaded', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.$emit('initReq');</span>
+<span class="cstat-no" title="statement not covered" >            resizeWindow();</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.$on('resizeHandler', <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if ($route.current.$$route.controller == "CreateDataAssetCtrl") {</span>
+<span class="cstat-no" title="statement not covered" >                resizeWindow();</span>
+            }
+        });
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function resizeWindow() {</span>
+<span class="cstat-no" title="statement not covered" >                    $('.formStep').height(window.innerHeight  -  $('.formStep').offset().top - $('#footerwrap').outerHeight()-20);</span>
+<span class="cstat-no" title="statement not covered" >                    $('fieldset').height(window.innerHeight  -  $('fieldset').offset().top - $('#footerwrap').outerHeight()- $('.btn-container').height() -80);</span>
+<span class="cstat-no" title="statement not covered" >                    $('.y-scrollable').css({</span>
+                        'max-height': $('fieldset').height()
+                    });
+&nbsp;
+        }
+&nbsp;
+	    // Initial Value
+<span class="cstat-no" title="statement not covered" >        $scope.form = {</span>
+            basic: {
+                platform: 'Apollo',
+                schema: [{
+                    name: '',
+                    type: 'string',
+                    desc: '',
+                    sample: ''
+                }],
+                partitions: []
+            },
+            submit: <span class="fstat-no" title="function not covered" >function(form) {</span>
+<span class="cstat-no" title="statement not covered" >                if (!form.$valid) {</span>
+<span class="cstat-no" title="statement not covered" >                    var field = null</span>
+                      , firstError = null ;
+<span class="cstat-no" title="statement not covered" >                    for (field in form) {</span>
+<span class="cstat-no" title="statement not covered" >                        if (field[0] != '$') {</span>
+<span class="cstat-no" title="statement not covered" >                            if (firstError === null  &amp;&amp; !form[field].$valid) {</span>
+<span class="cstat-no" title="statement not covered" >                                firstError = form[field].$name;</span>
+                            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            if (form[field].$invalid) {</span>
+<span class="cstat-no" title="statement not covered" >                                form[field].$dirty = true;</span>
+                            }
+                        }
+                    }
+<span class="cstat-no" title="statement not covered" >                    angular.element('.ng-invalid[name=' + firstError + ']').focus();</span>
+<span class="cstat-no" title="statement not covered" >                    errorMessage($scope.currentStep);</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                    form.$setPristine();</span>
+<span class="cstat-no" title="statement not covered" >                    this.data={</span>
+                      basic: this.basic
+                    };
+<span class="cstat-no" title="statement not covered" >                    this.data.basic.path += this.data.basic.path.substring(this.data.basic.path.length-1)=="/"?'':'/';</span>
+                    //this.data.basic.path += (this.basic.folderFormat==undefined?"":this.basic.folderFormat);
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    $('#confirm-pu').modal('show');</span>
+                }
+            },
+&nbsp;
+            save: <span class="fstat-no" title="function not covered" >function() {</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var msg = {</span>
+                	'system' : $scope.systemOptions[$scope.form.basic.system],
+                	'assetType' : $scope.assetTypeOptions[$scope.form.basic.type],
+                  'assetName' : $scope.form.basic.assetName,
+                	'assetHDFSPath' : $scope.form.data.basic.path + ($scope.form.data.basic.folderFormat==undefined?"":$scope.form.data.basic.folderFormat),
+                	'platform' : $scope.form.basic.platform,
+                	'schema' : $scope.form.basic.schema,
+                  'partitions' : $scope.form.basic.partitions,
+                  'owner' : $scope.form.basic.owner
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $http.post($config.uri.adddataasset, msg).success(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                    $('#confirm-pu').on('hidden.bs.modal', <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        $('#confirm-pu').off('hidden.bs.modal');</span>
+<span class="cstat-no" title="statement not covered" >                        $location.path('/dataassets');</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.$apply();</span>
+                    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	                  $('#confirm-pu').modal('hide');</span>
+&nbsp;
+                }).error(<span class="fstat-no" title="function not covered" >function(data){</span>
+<span class="cstat-no" title="statement not covered" >                  toaster.pop('error', 'Save data asset failed, please try again!', data.message);</span>
+                });
+            },
+&nbsp;
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var errorMessage = <span class="fstat-no" title="function not covered" >function(i, msg) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var errorMsgs = ['Please input valid values'];</span>
+<span class="cstat-no" title="statement not covered" >            if (!msg) {</span>
+<span class="cstat-no" title="statement not covered" >                toaster.pop('error', 'Error', errorMsgs[i - 1], 0);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                toaster.pop('error', 'Error', msg, 0);</span>
+            }
+        };
+&nbsp;
+    }]);
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jun 21 2017 13:26:09 GMT+0800 (China Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
