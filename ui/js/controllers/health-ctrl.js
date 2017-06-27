@@ -219,7 +219,8 @@ define(['./module'], function (controllers) {
                 };
 
                 resizeTreeMap();
-                $scope.myChart = echarts.init(document.getElementById('chart1'), 'dark');
+                if(document.getElementById('chart1')){
+                                    $scope.myChart = echarts.init(document.getElementById('chart1'), 'dark');
                 $scope.myChart.setOption(option);
 
                 $scope.myChart.on('click', function(param) {
@@ -234,6 +235,8 @@ define(['./module'], function (controllers) {
                         window.location.href = '/#!/detailed/'+param.data.name;
                     }
                 });
+                }
+
 
         }
 

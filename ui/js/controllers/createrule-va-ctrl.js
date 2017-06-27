@@ -23,7 +23,8 @@ define(['./module'], function(controllers) {
         var schemaDefinitionUrl = $config.uri.schemadefinition;
 
 
-        $http.get(dbtreeUrl).success(function(data) {
+        $http.get(dbtreeUrl).then(function successCallback(data) {
+            data  = data.data;
             var dbList = [];
             if (data && data.length > 0) {
                 data.forEach(function(db) {
@@ -233,7 +234,7 @@ define(['./module'], function(controllers) {
                 console.log(JSON.stringify($scope.form.data));
 
                 var newModel = $config.uri.newValidityModel;
-                $http.post(newModel, this.data).success(function(data) {
+                $http.post(newModel, this.data).then(function successCallback(data) {
                 	// if(data.status=='0')
                 	// {
 	                  $('#confirm-va').on('hidden.bs.modal', function(e) {
@@ -247,9 +248,13 @@ define(['./module'], function(controllers) {
                 	// {
                 	// 	errorMessage(0, data.result);
                 	// }
-                }).error(function(data){
-                  // errorMessage(0, 'Save model failed, please try again!');
+                // }).error(function(data){
+                //   // errorMessage(0, 'Save model failed, please try again!');
+                //   toaster.pop('error', 'Save model failed, please try again!', data.message);
+                // });
+                },function errorCallback(){
                   toaster.pop('error', 'Save model failed, please try again!', data.message);
+                    
                 });
             },
             testRegex : function(form) {

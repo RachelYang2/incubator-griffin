@@ -12,16 +12,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['angular', 'angularMocks', 'js/controllers/createrule0-ctrl'],
+define(['angular', 'angularMocks','angularRoute', 'js/controllers/createrule0-ctrl'],
   function(angular, mocks, CreateRule0Ctrl) {
     describe('Test /js/controllers/createrule0-ctrl.js', function(){
       	beforeEach(function(){
 	        module('app.controllers');
 	        module('app.services');
+	        module('app.filters');	  
+	        module('ngRoute');      
       	});
-    	var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout;
+    	var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout, $route;
 
-	    beforeEach(inject(function(_$rootScope_ , _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_){
+	    beforeEach(inject(function(_$rootScope_ , _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_, _$route_){
 	    	$rootScope = _$rootScope_;
 	    	$controller = _$controller_;
 	        $httpBackend = _$httpBackend_;
@@ -29,11 +31,12 @@ define(['angular', 'angularMocks', 'js/controllers/createrule0-ctrl'],
 	        $location = _$location_;
 	        $timeout = _$timeout_;
 	        toaster = {};
+	        $route = _$route_;
 	    }));
 
         beforeEach(function(){
           	$scope =  $rootScope.$new();
-	        controller = $controller('CreateRule0Ctrl', {$scope: $scope, toaster: toaster });
+	        controller = $controller('CreateRule0Ctrl', {$scope: $scope, toaster: toaster, $route: $route});
         });
 
         describe("if the controller of CreateRule0Ctrl exists",function(){

@@ -22,7 +22,8 @@ define(['./module'], function(controllers) {
         var dbtreeUrl = $config.uri.dbtree;
         var schemaDefinitionUrl = $config.uri.schemadefinition;
 
-        $http.get(dbtreeUrl).success(function(data) {
+        $http.get(dbtreeUrl).then(function successCallback(data) {
+            data = data.data;
             var dbList = [];
             if (data && data.length > 0) {
                 data.forEach(function(db) {
@@ -75,8 +76,8 @@ define(['./module'], function(controllers) {
                 $scope.form.basic.system = $filter('stridx')(sysName, 'modelsystem') + '';
 
                 //retrieve the schema definition and display the table
-                $http.get(schemaDefinitionUrl + '/' + newValue.id).success(function(data) {
-                    $scope.schemaCollection = data.schema;
+                $http.get(schemaDefinitionUrl + '/' + newValue.id).then(function successCallback(data) {
+                    $scope.schemaCollection = data.data.schema;
                 });
             }
         });
@@ -222,9 +223,10 @@ define(['./module'], function(controllers) {
                 console.log(JSON.stringify($scope.form.data));
 
                 var newModel = $config.uri.newAnomalyModel;
-                $http.post(newModel, this.data).success(function(data) {
+                $http.post(newModel, this.data).then(function successCallback(data) {
                 	// if(data.status=='0')
                 	// {
+                        data = data.data;
 	                  $('#confirm-an').on('hidden.bs.modal', function(e) {
 	                      $('#confirm-an').off('hidden.bs.modal');
 	                      $location.path('/rules');
@@ -236,9 +238,13 @@ define(['./module'], function(controllers) {
                 	// {
                 	// 	errorMessage(0, data.result);
                 	// }
-                }).error(function(data){
-                  // errorMessage(0, 'Save model failed, please try again!');
+                // }).error(function(data){
+                //   // errorMessage(0, 'Save model failed, please try again!');
+                //   toaster.pop('error', 'Save model failed, please try again!', data.message);
+                // });
+                },function errorCallback(data){
                   toaster.pop('error', 'Save model failed, please try again!', data.message);
+
                 });
             },
 

@@ -32,8 +32,9 @@ define(['./module'], function(controllers) {
         });
 
         var dbtreeUrl = $config.uri.dbtree;
-          $http.get(dbtreeUrl).success(function(data) {
+          $http.get(dbtreeUrl).then(function successCallback(data) {
             // console.log(data);
+            data = data.data;
             angular.forEach(data, function(p){
               if(p.platform == 'Apollo'){ //::TODO:Only Apollo is supported cussrently
                 $scope.allSystem = {};
@@ -131,7 +132,7 @@ define(['./module'], function(controllers) {
 
 
                 var newModel = $config.uri.newPublishModel;
-                $http.post(newModel, this.data).success(function() {
+                $http.post(newModel, this.data).then(function successCallback() {
 
                     $('#confirm-pu').on('hidden.bs.modal', function(e) {
                         $('#confirm-pu').off('hidden.bs.modal');
@@ -140,9 +141,13 @@ define(['./module'], function(controllers) {
                     });
                   	$('#confirm-pu').modal('hide');
 
-                }).error(function(data){
-                  // errorMessage(0, 'Save model failed, please try again!');
+                // }).error(function(data){
+                //   // errorMessage(0, 'Save model failed, please try again!');
+                //   toaster.pop('error', 'Save model failed, please try again!', data.message);
+                // });
+                },function errorCallback(){
                   toaster.pop('error', 'Save model failed, please try again!', data.message);
+
                 });
             },
 

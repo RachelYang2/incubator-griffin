@@ -55,8 +55,8 @@ define(['./module'], function(controllers) {
                                    };
                                    dbNode.children.push(dsNode);
                                    dsNode.parent = db;
-
-                                   if (table.sd.cols) {
+                                   if(table.sd){
+                                    if (table.sd.cols) {
                                        table.sd.cols.sort(function(a, b){
                                          return (a.name<b.name?-1:(a.name>b.name?1:0));
                                        });
@@ -69,7 +69,10 @@ define(['./module'], function(controllers) {
 //                                           schemaNode.parent = dsNode;
 //                                           dsNode.children.push(schemaNode);
                                        });
+                                    }
                                    }
+
+                                   
 
                                });
                           };
@@ -88,11 +91,16 @@ define(['./module'], function(controllers) {
 
             // $scope.schemaCollection = null;
             if (newValue) {
-                $http.get(schemaDefinitionUrl+ '/' + newValue.parent[0].dbName+'/table/'+newValue.name).then(function successCallback(data) {
-                console.log(data);
-                $scope.schemaCollection = data.data.sd.cols;
-                console.log($scope.schemaCollection);
-                });
+                if(newValue.parent){
+                    $http.get(schemaDefinitionUrl+ '/' + newValue.parent[0].dbName+'/table/'+newValue.name).then(function successCallback(data) {
+                    console.log(data);
+                    if(data.data){
+                        $scope.schemaCollection = data.data.sd.cols;
+                    }
+                    console.log($scope.schemaCollection);
+                    });
+                }
+                
             }
 
         });
@@ -146,7 +154,10 @@ define(['./module'], function(controllers) {
             if (newValue) {
                 $http.get(schemaDefinitionUrl + '/' + newValue.parent[0].dbName+'/table/'+newValue.name).then(function successCallback(data) {
                 console.log(data);
-                $scope.schemaCollectionTarget = data.data.sd.cols;
+                if(data.data){
+                    $scope.schemaCollectionTarget = data.data.sd.cols;
+
+                }
                 console.log($scope.schemaCollectionTarget);
                 });
             }

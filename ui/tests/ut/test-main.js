@@ -24,7 +24,8 @@ Object.keys(window.__karma__.files).forEach(function(file) {
     // then do not normalize the paths
     var normalizedTestModule = file.replace(/^\/base\/|\.js$/g, '');
     // var normalizedTestModule = file.replace(/^\/base\//, '').replace(/\.js$/, '');
-    // console.log(normalizedTestModule);
+    console.log(normalizedTestModule);
+    console.log('success');
     allTestFiles.push(normalizedTestModule);
   }
 });
@@ -46,15 +47,16 @@ require.config({
     'angular': '/base/bower_components/angular/angular',
     'angularMocks': '/base/node_modules/angular-mocks/angular-mocks',
     'angularRoute': '/base/bower_components/angular-route/angular-route',
-
+    'angularCookies':'/base/bower_components/angular-cookies/angular-cookies',
     'ngAnimate': '/base/bower_components/angular-animate/angular-animate',
     'ngToaster': '/base/bower_components/AngularJS-Toaster/toaster',
-
+    'angularSpinner':'/base/bower_components/angular-spinner/angular-spinner',
     'jquery': '/base/bower_components/jquery/dist/jquery',
     'bootstrap': '/base/bower_components/bootstrap/dist/js/bootstrap',
-
-    
 		'echarts': '/base/bower_components/echarts/dist/echarts',
+    'echarts-dark':'/base/bower_components/echarts/theme/dark',
+    'ngSmartTable':'/base/bower_components/angular-smart-table/dist/smart-table',
+    'spin':'/base/bower_components/spin.js/spin'
   },
   shim: {
     'angular': {
@@ -69,6 +71,10 @@ require.config({
     'angularRoute': {
         deps: ['angular'],
         exports: 'angularRoute'
+    },
+    'angularCookies': {
+        deps: ['angular'],
+        exports: 'angularCookies'
     },
     'ngSmartTable': {
       deps: ['angular'],
@@ -92,6 +98,17 @@ require.config({
     },
     'echarts': {
       exports: 'echarts'
+    },
+    'angularSpinner':{
+      deps:['angular'],
+      exports:'angularSpinner'
+    },
+    'echarts-dark':{
+      deps:['echarts'],
+      exports:'echarts-dark'
+    },
+    'spin':{
+      exports:'spin'
     }
   }
 });
