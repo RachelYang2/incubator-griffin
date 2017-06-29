@@ -14,36 +14,42 @@ limitations under the License.
 
 -->
 <div class="container-fluid" id="viewsample-content" style="overflow:auto;">
-  <div class="row">
-    <h5 class="over-title margin-bottom-15">Download sample</h5>
-  </div><!--//row-->
-  <div class="row">
-    <div  class="col-lg-12 col-md-12 col-sm-12">
-        <div id="viewrule-definition" class="viewrule-content">
-          <div ng-if="sample.length==0">No data</div>
-          <div ng-if="sample.length>0" ng-repeat="item in sample">
-            <span style="color: #fff">
-              {{item.date | date: 'MM/dd/yy HH:mm'}}
-            </span>
-            &nbsp;&nbsp;
-            <span>
-              {{item.path}}
-            </span>
-            &nbsp;&nbsp;
-            <span>
-              <a target="_self" href="{{downloadUrl + '/' + item.path}}" download style="font-size: 11px">
-                <u>Download</u>
-              </a>
-            </span>
-          </div>
-
-      </div>
-      <p>
-        Click the "Download" link to download sample data. You can also find the complete data file from the path listed above, and then you can back-fill the missed data
-      </p>
+    <div class="row">
+        <h5 class="over-title margin-bottom-15">
+            Download sample
+        </h5>
     </div>
-
-
-  </div><!--//row-->
-
+    <!--//row-->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div id="viewrule-definition" class="viewrule-content">
+                <div ng-if="sample.length==0">
+                    No data
+                </div>
+                <div ng-if="sample.length>0" ng-repeat="item in sample">
+                    <span style="color: #fff">
+                        {{item.date | date: 'MM/dd/yy HH:mm'}}
+                    </span>
+                    &nbsp;&nbsp;
+                    <span>
+                        {{item.path}}
+                    </span>
+                    &nbsp;&nbsp;
+                    <span>
+                        <a target="_self" href="{{downloadUrl + '/' + item.path}}" download style="font-size: 11px">
+                            <u>
+                                Download
+                            </u>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <p>
+                Click the "Download" link to download sample data. You can also find the
+                complete data file from the path listed above, and then you can back-fill
+                the missed data
+            </p>
+        </div>
+    </div>
+    <!--//row-->
 </div>

@@ -16,14 +16,14 @@ limitations under the License.
 define(['./module'], function (filters) {
     'use strict';
     var constants = {
-      modeltype: ['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics'],
-      scheduletype: ['Daily', 'Weekly', 'Monthly', 'Hourly'],
-      modelsystem: ['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka', 'Sojourner', 'SiteSpeed', 'EDW'],
-      matchfunction: ['LENGTH', 'LOWER', 'UPPER', 'TRIM'],
-      //modelstatus: ['Testing', 'Need Verify', 'Deployed'],
-      modelstatus: ['Initial', 'Validation', 'Production'],
-      vatype: ['Defaut Count', 'Total Count', 'Null Count', 'Unique Count', 'Duplicate Count', 'Maximum', 'Minimum', 'Mean', 'Median', 'Regular Expression Matching', 'Pattern Frequency'],
-      antype: ['Default', 'History Trend Detection', 'Bollinger Bands Detection', 'Deviation Detection(Based on MAD)']
+        modeltype: ['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics'],
+        scheduletype: ['Daily', 'Weekly', 'Monthly', 'Hourly'],
+        modelsystem: ['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka', 'Sojourner', 'SiteSpeed', 'EDW'],
+        matchfunction: ['LENGTH', 'LOWER', 'UPPER', 'TRIM'],
+        //modelstatus: ['Testing', 'Need Verify', 'Deployed'],
+        modelstatus: ['Initial', 'Validation', 'Production'],
+        vatype: ['Defaut Count', 'Total Count', 'Null Count', 'Unique Count', 'Duplicate Count', 'Maximum', 'Minimum', 'Mean', 'Median', 'Regular Expression Matching', 'Pattern Frequency'],
+        antype: ['Default', 'History Trend Detection', 'Bollinger Bands Detection', 'Deviation Detection(Based on MAD)']
     };
 
     //get tha value by index from an array
@@ -31,10 +31,10 @@ define(['./module'], function (filters) {
         return function (index, array) {
             var result = index;
             if(!!array && (array instanceof Array)  && index < array.length){
-              result = array[index];
+                result = array[index];
             }else if(typeof(array)==='string'){
-              if(constants[array] && index < constants[array].length){
-                result = constants[array][index];
+                if(constants[array] && index < constants[array].length){
+                    result = constants[array][index];
               }
             }
             return result;
@@ -46,11 +46,11 @@ define(['./module'], function (filters) {
           return function (value, array) {
               var result = -1;
               if(!!array && (array instanceof Array)  && index < array.length){
-                result = array.indexOf(value);
+                  result = array.indexOf(value);
               }else if(typeof(array)==='string'){
-                if(constants[array]){
-                  result = constants[array].indexOf(value);
-                }
+                  if(constants[array]){
+                      result = constants[array].indexOf(value);
+                  }
               }
               return result;
           }
@@ -62,6 +62,4 @@ define(['./module'], function (filters) {
                 return constants[name];
             }
           });
-
-
 });

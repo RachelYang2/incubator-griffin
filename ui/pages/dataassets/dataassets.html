@@ -13,13 +13,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 -->
-<div  class="bs-component" >
-	<p>
-		<!--<a class="btn btn-primary btn-o btn-wide" href="#/createdataasset"><i class="fa fa-plus"></i> Register Data Asset</a>-->
-	</p>
+<div class="bs-component" >
+	<p></p>
 	<div id="assetContainer" style="margin-top:40px">
-    <table st-table="displayed" st-pipe="paging" class="table table-striped">
-	  	<thead>
+    	<table st-table="displayed" st-pipe="paging" class="table table-striped">
+	  		<thead>
 	    	<tr style="background-color:#7D95CC">
 				<th st-ratio="10">Table Name</th>
 				<th st-ratio="10">DB Name</th>
@@ -29,13 +27,13 @@ limitations under the License.
 				<th st-ratio="20">Location</th>
 
 			</tr>
-	  	</thead>
-	  	<tbody ng-if="!displayed || displayed.length == 0">
+	  		</thead>
+	  		<tbody ng-if="!displayed || displayed.length == 0">
 		    <tr>
 		        <td colspan="7" style="text-align:center">No content.</td>
 		    </tr>
-		</tbody>
-	  	<tbody ng-repeat="row in displayed" style="word-break:break-all;">
+			</tbody>
+	  		<tbody ng-repeat="row in displayed" style="word-break:break-all;">
 	    	<tr>
 	    		<td ng-class="{accordion:true}" ng-click="row.showDetail=!(row.showDetail)" style="cursor: pointer;">
                     <i ng-show="!row.showDetail" class="fa fa-chevron-circle-right blue"></i>
@@ -70,31 +68,32 @@ limitations under the License.
 				    </table>
 				</td>
 	    	</tr>
-	  	</tbody>
-	    <tfoot>
-	      <tr>
-	        <td colspan="8" class="text-right">
-	          <div  st-items-by-page="10" st-pagination="" st-displayed-pages="10"></div>
-	        </td>
-	      </tr>
-	    </tfoot>
-    </table>
+	  		</tbody>
+	    	<tfoot>
+	      	<tr>
+	        	<td colspan="8" class="text-right">
+	          	<div  st-items-by-page="10" st-pagination="" st-displayed-pages="10">
+	          	</div>
+	        	</td>
+	      	</tr>
+	    	</tfoot>
+    	</table>
 	</div>
     <div class="modal fade" id="confirm-delete" role="dialog">
-      <div class="modal-dialog modal-xg modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Delete the data asset with the below information?</h4>
-          </div>
-          <div class="modal-body">
-            <ng-include src="'/pages/dataassets/confirmation-delete-dataasset.html'"/>
-          </div>
-          <div class="modal-footer">
-						<button type="button" class="btn btn-primary" ng-click="sendDeleteRequest()">Yes</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-          </div>
-        </div>
-      </div>
+      	<div class="modal-dialog modal-xg modal-lg">
+        	<div class="modal-content">
+          		<div class="modal-header">
+            		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            	<h4 class="modal-title">Delete the data asset with the below information?</h4>
+          		</div>
+          		<div class="modal-body">
+            		<ng-include src="'/pages/dataassets/confirmation-delete-dataasset.html'"/>
+          		</div>
+          		<div class="modal-footer">
+					<button type="button" class="btn btn-primary" ng-click="sendDeleteRequest()">Yes</button>
+            		<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          		</div>
+        	</div>
+      	</div>
     </div>
 </div>

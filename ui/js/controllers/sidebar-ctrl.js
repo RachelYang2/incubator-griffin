@@ -31,15 +31,15 @@ define(['./module'], function(controllers) {
             $scope.dataAssetPieChart.setOption($barkChart.getOptionPie(status));
         }
         function pageInit() {
-              $scope.status = new Object();
-              $scope.status.health = '100';
-              $scope.status.invalid = '6';
-//              renderDataAssetPie($scope.status);
-              sideBarList();
+            $scope.status = new Object();
+            $scope.status.health = '100';
+            $scope.status.invalid = '6';
+//            renderDataAssetPie($scope.status);
+            sideBarList();
         }
 
         $scope.$watch(function(){return $routeParams.sysName;}, function(value){
-          console.log('Watched value: ' + value);
+            console.log('Watched value: ' + value);
         });
 
         $scope.draw = function(metric, parentIndex, index) {
@@ -52,9 +52,8 @@ define(['./module'], function(controllers) {
 
             $('#'+chartId).unbind('click');
             $('#'+chartId).click(function(e) {
-              window.location.href = '/#!/detailed/'+$scope.finalData[parentIndex].metrics[index].name;
+                window.location.href = '/#!/detailed/'+$scope.finalData[parentIndex].metrics[index].name;
             });
-
         };
 
         var showBig = function(metric){
@@ -62,41 +61,42 @@ define(['./module'], function(controllers) {
         }
 
         function sideBarList(sysName){
-             var url_organization = $config.uri.organization;
+            var url_organization = $config.uri.organization;
 //            var url_organization = 'org.json';
             $http.get(url_organization).then(function successCallback(res){
-               var orgNode = null;
-               angular.forEach(res.data, function(value,key) {
-               orgNode = new Object();
-               $scope.orgs.push(orgNode);
-               orgNode.name = key;
-               orgNode.assetMap = value;
-               });
-               $scope.originalOrg = angular.copy($scope.orgs);
-               var url_briefmetrics = $config.uri.dashboard;
+                var orgNode = null;
+                angular.forEach(res.data, function(value,key) {
+                orgNode = new Object();
+                $scope.orgs.push(orgNode);
+                orgNode.name = key;
+                orgNode.assetMap = value;
+                });
+                $scope.originalOrg = angular.copy($scope.orgs);
+                var url_briefmetrics = $config.uri.dashboard;
                 $http.post(url_briefmetrics, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
 //               $http.get('data.json').then(function successCallback(data){
-                   angular.forEach(data.data.hits.hits, function(sys) {
+                    angular.forEach(data.data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
                         return a.tmst - b.tmst;
                         }
-                   });
-               $scope.originalData = angular.copy(data.data);
-               $scope.myData = angular.copy($scope.originalData.hits.hits);
-               $scope.metricName = [];
-               for(var i = 0;i<$scope.myData.length;i++){
-                   $scope.metricName.push($scope.myData[i]._source.name);
-               }
-               $scope.metricNameUnique = [];
-               angular.forEach($scope.metricName,function(name){
-                   if($scope.metricNameUnique.indexOf(name) === -1){
-                        $scope.metricData[$scope.metricNameUnique.length] = new Array();
-                        $scope.metricNameUnique.push(name);
-                 }
-               });
+                });
 
-               for(var i = 0;i<$scope.myData.length;i++){
+                $scope.originalData = angular.copy(data.data);
+                $scope.myData = angular.copy($scope.originalData.hits.hits);
+                $scope.metricName = [];
+                for(var i = 0;i<$scope.myData.length;i++){
+                    $scope.metricName.push($scope.myData[i]._source.name);
+                }
+                $scope.metricNameUnique = [];
+                angular.forEach($scope.metricName,function(name){
+                    if($scope.metricNameUnique.indexOf(name) === -1){
+                         $scope.metricData[$scope.metricNameUnique.length] = new Array();
+                         $scope.metricNameUnique.push(name);
+                    }
+                });
+
+                for(var i = 0;i<$scope.myData.length;i++){
             //push every point to its metric
                     for(var j = 0 ;j<$scope.metricNameUnique.length;j++){
                         if($scope.myData[i]._source.name==$scope.metricNameUnique[j]){
@@ -104,13 +104,13 @@ define(['./module'], function(controllers) {
                         }
                     }
                 }
-               angular.forEach($scope.originalOrg,function(sys,parentIndex){
-                   var node = null;
-                   node = new Object();
-                   node.name = sys.name;
-                   node.dq = 0;
-                   node.metrics = new Array();
-                   angular.forEach($scope.metricData,function(metric,index){
+                angular.forEach($scope.originalOrg,function(sys,parentIndex){
+                    var node = null;
+                    node = new Object();
+                    node.name = sys.name;
+                    node.dq = 0;
+                    node.metrics = new Array();
+                    angular.forEach($scope.metricData,function(metric,index){
                         if(sys.assetMap.indexOf(metric[metric.length-1]._source.name)!= -1){
                             var metricNode = new Object();
                             metricNode.name = metric[metric.length-1]._source.name;
@@ -119,25 +119,28 @@ define(['./module'], function(controllers) {
                             metricNode.details = angular.copy(metric);
                             node.metrics.push(metricNode);
                         }
-                   });
-                   $scope.finalData.push(node);
+                    });
+                    $scope.finalData.push(node);
                 });
 
-            if(!sysName){
-              $scope.backup_metrics = angular.copy($scope.finalData);
-            }
-            $timeout(function() {
-                resizeSideChart();
-            }, 0);
+                if(!sysName){
+                  $scope.backup_metrics = angular.copy($scope.finalData);
+                }
+                $timeout(function() {
+                    resizeSideChart();
+                }, 0);
            });
           });
         }
 
         $(window).resize(function() {
             console.log('sidebar resize');
-            if(window.innerWidth < 992) {
+            if(window.innerWidth < 992) 
+            {
               $('#rightbar').css('display', 'none');
-            } else {
+            } 
+            else 
+            {
               $('#rightbar').css('display', 'block');
               resizePieChart();
               $scope.dataAssetPieChart.resize();
@@ -151,19 +154,19 @@ define(['./module'], function(controllers) {
             });
             angular.forEach($scope.finalData, function(sys, sysIndex) {
             var sysIndex = sysIndex;
-            angular.forEach(sys.metrics, function(metric, index) {
-                if (!metric.tag) {
-                  $scope.draw(metric, sysIndex, index);
-                }
-            })
-          });
+                angular.forEach(sys.metrics, function(metric, index) {
+                    if (!metric.tag) {
+                      $scope.draw(metric, sysIndex, index);
+                    }
+                });
+            });
         }
 
         function resizePieChart() {
-          $('#data-asset-pie').css({
-              height: $('#data-asset-pie').parent().width(),
-              width: $('#data-asset-pie').parent().width()
-          });
+            $('#data-asset-pie').css({
+                height: $('#data-asset-pie').parent().width(),
+                width: $('#data-asset-pie').parent().width()
+            });
         }
        }
     ]);

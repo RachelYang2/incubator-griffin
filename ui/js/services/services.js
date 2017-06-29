@@ -20,72 +20,66 @@ define(['./module'], function (services) {
 
     services.factory('$config', function(){
 
-
 //    var BACKEND_SERVER = 'http://10.149.247.156:38080';
-//     var BACKEND_SERVER = 'http://localhost:8080';
+    // var BACKEND_SERVER = 'http://localhost:8080';
        var BACKEND_SERVER = '';
-      var API_ROOT_PATH = '/api/v1';
+    var API_ROOT_PATH = '/api/v1';
 
 //      var ES_SERVER = 'http://10.149.247.156:59200';
 //      var ES_SERVER = "http://" + location.host + ":59200"
-      var ES_SERVER = "http://" + location.host.replace("8080", "9200");
+    var ES_SERVER = "http://" + location.host.replace("8080", "9200");
 
-      var config = {
+    var config = {
           // URI paths, always have a trailing /
-          uri: {
-              base: BACKEND_SERVER + API_ROOT_PATH,
+        uri: {
+            base: BACKEND_SERVER + API_ROOT_PATH,
 
-              dbtree:BACKEND_SERVER + '/metadata/hive/alltables',
-              schemadefinition: BACKEND_SERVER + '/metadata/hive',
-              dataassetlist: BACKEND_SERVER + '/metadata/hive/alltables',
+            dbtree:BACKEND_SERVER + '/metadata/hive/alltables',
+            schemadefinition: BACKEND_SERVER + '/metadata/hive',
+            dataassetlist: BACKEND_SERVER + '/metadata/hive/alltables',
 
-              adddataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
-              updatedataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
-              getdataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
-              deletedataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
+            adddataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
+            updatedataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
+            getdataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
+            deletedataasset: BACKEND_SERVER + API_ROOT_PATH + '/dataassets',
 
               //mydashboard
-              getmydashboard: BACKEND_SERVER + API_ROOT_PATH + '/metrics/mydashboard/',
-              getsubscribe: BACKEND_SERVER + API_ROOT_PATH + '/subscribe/',
-              newsubscribe: BACKEND_SERVER + API_ROOT_PATH + '/subscribe',
+            getmydashboard: BACKEND_SERVER + API_ROOT_PATH + '/metrics/mydashboard/',
+            getsubscribe: BACKEND_SERVER + API_ROOT_PATH + '/subscribe/',
+            newsubscribe: BACKEND_SERVER + API_ROOT_PATH + '/subscribe',
 
               //metrics
-              statistics: BACKEND_SERVER + API_ROOT_PATH + '/metrics/statics',
-              briefmetrics: BACKEND_SERVER + API_ROOT_PATH + '/metrics/briefmetrics',
-              heatmap: BACKEND_SERVER + API_ROOT_PATH + '/metrics/heatmap' ,
-              metricdetail: BACKEND_SERVER + API_ROOT_PATH + '/metrics/complete',
-              rulemetric: BACKEND_SERVER + API_ROOT_PATH + '/metrics/brief',
-//              organization:BACKEND_SERVER+'/org',
-              orgmap: BACKEND_SERVER+'/metrics/org',
+            statistics: BACKEND_SERVER + API_ROOT_PATH + '/metrics/statics',
+            briefmetrics: BACKEND_SERVER + API_ROOT_PATH + '/metrics/briefmetrics',
+            heatmap: BACKEND_SERVER + API_ROOT_PATH + '/metrics/heatmap' ,
+            metricdetail: BACKEND_SERVER + API_ROOT_PATH + '/metrics/complete',
+            rulemetric: BACKEND_SERVER + API_ROOT_PATH + '/metrics/brief',
+            orgmap: BACKEND_SERVER+'/metrics/org',
 
-
-              metricsByOrg:'',
-//              organization:'/org.json',
-//              dashboard:'/dashboard.json',
-
-              organization:BACKEND_SERVER + '/orgWithMetrics',
-              dashboard:ES_SERVER+'/griffin/accuracy/_search?pretty&filter_path=hits.hits._source',
-              metricsample: BACKEND_SERVER + API_ROOT_PATH + '/metrics/sample',
-              metricdownload: BACKEND_SERVER + API_ROOT_PATH + '/metrics/download',
+            metricsByOrg:'',
+            organization:BACKEND_SERVER + '/orgWithMetrics',
+            dashboard:ES_SERVER+'/griffin/accuracy/_search?pretty&filter_path=hits.hits._source',
+            metricsample: BACKEND_SERVER + API_ROOT_PATH + '/metrics/sample',
+            metricdownload: BACKEND_SERVER + API_ROOT_PATH + '/metrics/download',
 
               //Models
-              allModels: BACKEND_SERVER + '/measures',
-              addModels: BACKEND_SERVER + '/measures/add',
-              deleteModel:BACKEND_SERVER + '/measures/deleteByName',
-              getModel: BACKEND_SERVER + '/measures/findByName',
-              enableModel: BACKEND_SERVER + API_ROOT_PATH + '/models/enableModel',
+            allModels: BACKEND_SERVER + '/measures',
+            addModels: BACKEND_SERVER + '/measures/add',
+            deleteModel:BACKEND_SERVER + '/measures/deleteByName',
+            getModel: BACKEND_SERVER + '/measures/findByName',
+            enableModel: BACKEND_SERVER + API_ROOT_PATH + '/models/enableModel',
 
               //Jobs
-              allJobs:BACKEND_SERVER + '/jobs/',
-              addJobs:BACKEND_SERVER+'/jobs/add/',
-              getMeasuresByOwner:BACKEND_SERVER+'/measures/owner/',
-              deleteJob:BACKEND_SERVER + '/jobs/del/',
-              getInstances:BACKEND_SERVER + '/jobs/instances/',
-//              allJobs:'/jobs.json',
-              newAccuracyModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
-              newValidityModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
-              newAnomalyModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
-              newPublishModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
+            allJobs:BACKEND_SERVER + '/jobs/',
+            addJobs:BACKEND_SERVER+'/jobs/add/',
+            getMeasuresByOwner:BACKEND_SERVER+'/measures/owner/',
+            deleteJob:BACKEND_SERVER + '/jobs/del/',
+            getInstances:BACKEND_SERVER + '/jobs/instances/',
+
+            newAccuracyModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
+            newValidityModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
+            newAnomalyModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
+            newPublishModel: BACKEND_SERVER + API_ROOT_PATH + '/models' ,
               // newAccuracyModel: BACKEND_SERVER + API_ROOT_PATH + '/models/newAccuracyModel' ,
               // newValidityModel: BACKEND_SERVER + API_ROOT_PATH + '/model/newValidityModel' ,
               // newAnomalyModel: BACKEND_SERVER + API_ROOT_PATH + '/model/newAnomalyModel' ,
@@ -96,11 +90,9 @@ define(['./module'], function (services) {
               // getAnomalyModel: BACKEND_SERVER + API_ROOT_PATH + '/model/getAnomalyModel',
 
               //Notification
-              getnotifications: BACKEND_SERVER + API_ROOT_PATH + '/notifications',
+            getnotifications: BACKEND_SERVER + API_ROOT_PATH + '/notifications',
           }
-
       };
-
       return config;
     });
 });

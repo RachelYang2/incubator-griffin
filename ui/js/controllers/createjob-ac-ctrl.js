@@ -25,29 +25,16 @@ define(['./module'], function(controllers) {
 
         $scope.Measures = [];
         $scope.$on('$viewContentLoaded', function() {
-            // console.log($('#footerwrap').css('height'));
-            // console.log($('.formStep').offset());
             $scope.$emit('initReq');
             resizeWindow();
-
-            //  $('#confirm').on('hidden.bs.modal', function (e) {
-            //    console.log('hidden');
-            //   //  $('#confirm').off('hidden.bs.modal');
-            //    $location.path('/rules');
-            //   });
-
-            // $('.formStep').css({height: 800});
         });
         var getMeasureUrl = $config.uri.getMeasuresByOwner+$scope.ntAccount;
         $http.get(getMeasureUrl).then(function successCallback(res){
             angular.forEach(res.data,function(measure){
                 $scope.Measures.push(measure);
             })
-            console.log($scope.Measures);
             $scope.measure = 0;
         })
-
-
 
         $scope.$on('resizeHandler', function(e) {
             if ($route.current.$$route.controller == "CreateRuleACCtrl") {
@@ -56,17 +43,15 @@ define(['./module'], function(controllers) {
             }
         });
 
-
         function resizeWindow() {
-                    var stepSelection = '.formStep[id=step-' + $scope.currentStep + ']';
-                    $(stepSelection).css({
-                        height: window.innerHeight - $(stepSelection).offset().top - $('#footerwrap').outerHeight()
-                    });
-                    $('fieldset').height($(stepSelection).height() - $(stepSelection + '>.stepDesc').height() - $('.btn-container').height() - 80);
-                    $('.y-scrollable').css({
-                        'max-height': $('fieldset').height()- $('.add-dataset').outerHeight()
-                    });
-
+            var stepSelection = '.formStep[id=step-' + $scope.currentStep + ']';
+            $(stepSelection).css({
+                height: window.innerHeight - $(stepSelection).offset().top - $('#footerwrap').outerHeight()
+            });
+            $('fieldset').height($(stepSelection).height() - $(stepSelection + '>.stepDesc').height() - $('.btn-container').height() - 80);
+            $('.y-scrollable').css({
+                'max-height': $('fieldset').height()- $('.add-dataset').outerHeight()
+            });
         }
 
         // Initial Value
@@ -92,7 +77,6 @@ define(['./module'], function(controllers) {
                     angular.element('.ng-invalid[name=' + firstError + ']').focus();
                     errorMessage($scope.currentStep);
                 } else {
-                    //  $location.path('/rules');
                     form.$setPristine();
                     var period;
                     if($scope.timeType=='minutes')
@@ -107,71 +91,43 @@ define(['./module'], function(controllers) {
                     var day = $scope.jobStartTime.substr(6,2);
                     startTime = year +'-'+ month + '-'+ day + ' '+ $scope.jobStartTime.split(' ')[1];
                     startTime = Date.parse(startTime);
+
                     if(isNaN(startTime)){
                         toaster.pop('error','Please input the right format of start time');
                         return;
                     }
                     this.data={
-                      "sourcePat":$scope.sourcePat,
-                      "targetPat":$scope.targetPat,
-                      "jobStartTime":startTime,
-                      "periodTime":period,
-                      "groupName":'BA',
+                        "sourcePat":$scope.sourcePat,
+                        "targetPat":$scope.targetPat,
+                        "jobStartTime":startTime,
+                        "periodTime":period,
+                        "groupName":'BA',
                     };
                     $('#confirm-job').modal('show');
                 }
             },
 
             save: function() {
-
-
                 //::TODO: Need to save the data to backend with POST/PUT method
-                console.log(JSON.stringify($scope.form.data));
-
-//                var newModel = $config.uri.newAccuracyModel;
-//                var BACKEND_SERVER = '';
                 var date = new Date();
                 var month = date.getMonth()+1;
                 var timestamp = Date.parse(date);
                 timestamp = timestamp / 1000;
                 var time = date.toDateString()+' '+date.toLocaleTimeString();
-//                var jobName = $scope.Measures[$scope.measure] + '-BA-' + $scope.ntAccount + '-' + date.getFullYear() + '-'+ month + '-'+date.getDate();
                 var jobName = $scope.Measures[$scope.measure] + '-BA-' + $scope.ntAccount + '-' + time;
-
                 var newJob = $config.uri.addJobs + this.data.groupName + '/' + jobName + '/' + $scope.Measures[$scope.measure];
-                console.log(newJob);
-                console.log(this.data);
+              
                 $http.post(newJob, this.data).then(function successCallback(data) {
-                	// if(data.status=='0')
-                	// {
-                	  console.log(data);
-                      // if(data=='fail'){
-                      //     toaster.pop('error', 'Please modify the name of job, because there is already a same model in database ', data.message);
-                      //     return;
-                      // }
-
-	                  $('#confirm-job').on('hidden.bs.modal', function(e) {
-	                      $('#confirm-job').off('hidden.bs.modal');
-	                      $location.path('/jobs').replace();
-	                      $scope.$apply();
-	                  });
-	                	$('#confirm-job').modal('hide');
-	                // }
-                	// else
-                	// {
-                	// 	errorMessage(0, data.result);
-                	// }
-
-                // }).error(function(data){
-                //   // errorMessage(0, 'Save model failed, please try again!');
-                //   toaster.pop('error', 'Save job failed, please try again!', data.message);
-                // });
-                      },function errorCallback(response) {
-                        toaster.pop('error', 'Error when creating job', response.message);
-                        });
-
+	                $('#confirm-job').on('hidden.bs.modal', function(e) {
+	                    $('#confirm-job').off('hidden.bs.modal');
+	                    $location.path('/jobs').replace();
+	                    $scope.$apply();
+	                });
+	                $('#confirm-job').modal('hide');
+                },function errorCallback(response) {
+                    toaster.pop('error', 'Error when creating job', response.message);
+                });
             },
-
         }
 
         var errorMessage = function(i, msg) {
@@ -184,6 +140,4 @@ define(['./module'], function(controllers) {
         };
     }
     ]);
-
-
 });

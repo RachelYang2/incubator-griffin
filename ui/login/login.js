@@ -16,31 +16,27 @@ limitations under the License.
 
 $(document).ready(function() {
     $('input:eq(1)').keyup(function(evt){
-      if(evt.which == 13){//enter
-        evt.preventDefault();
-        $('#login-btn').click();
-        $('#login-btn').focus();
-      }
+        if(evt.which == 13){//enter
+            evt.preventDefault();
+            $('#login-btn').click();
+            $('#login-btn').focus();
+        }
     });
 
     $('input:eq(0)').focus(function(evt){
-      $('#loginMsg').hide();
+        $('#loginMsg').hide();
     });
 
     $('input:eq(1)').focus(function(evt){
-      $('#loginMsg').hide();
+        $('#loginMsg').hide();
     });
 
     $('#login-btn').click(function() {
 
-
-
         var name = $('input:eq(0)').val();
         var password = $('input:eq(1)').val();
 
-       var loginUrl = '/api/v1/login/authenticate';
-
-
+        var loginUrl = '/api/v1/login/authenticate';
 
         loginBtnWait();
         $.ajax({
@@ -77,7 +73,6 @@ $(document).ready(function() {
                 window.location.replace('/');
                 //::TODO ignore login for test purpose done
             }
-
         });
     });
 
@@ -98,8 +93,8 @@ $(document).ready(function() {
     }
 
     function loginBtnWait() {
-      $('#login-btn').addClass('disabled')
-        .text('Logging in......');
+        $('#login-btn').addClass('disabled')
+            .text('Logging in......');
     }
 
     function loginBtnActive() {
@@ -108,7 +103,7 @@ $(document).ready(function() {
     }
 
     function showLoginFailed() {
-      $('#loginMsg').show()
-        .text('Login failed. Try again.');
+        $('#loginMsg').show()
+            .text('Login failed. Try again.');
     }
 });

@@ -21,8 +21,6 @@ define(['./module'], function (controllers) {
         $scope.form = {};
         $scope.form.basic = {};
 
-        // $scope.platformOptions = ['Teradata', 'Apollo'];
-        // $scope.systemOptions = ['Sojourner', 'SiteSpeed', 'Bullseye', 'PDS', 'GPS'];
         $scope.systemOptions = $filter('strarr')('modelsystem');//['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
         $scope.assetTypeOptions = ['hdfsfile', 'hivetable'];
 
@@ -31,7 +29,6 @@ define(['./module'], function (controllers) {
         $scope.$on('$viewContentLoaded', function() {
             $scope.$emit('initReq');
             resizeWindow();
-
         });
 
         $scope.$on('resizeHandler', function(e) {
@@ -41,19 +38,12 @@ define(['./module'], function (controllers) {
         });
 
         function resizeWindow() {
-                    $('.formStep').height(window.innerHeight  -  $('.formStep').offset().top - $('#footerwrap').outerHeight());
-                    $('fieldset').height(window.innerHeight  -  $('fieldset').offset().top - $('#footerwrap').outerHeight()- $('.btn-container').height() -80);
-                    $('.y-scrollable').css({
-                        'max-height': $('fieldset').height()
-                    });
-
+            $('.formStep').height(window.innerHeight  -  $('.formStep').offset().top - $('#footerwrap').outerHeight());
+            $('fieldset').height(window.innerHeight  -  $('fieldset').offset().top - $('#footerwrap').outerHeight()- $('.btn-container').height() -80);
+            $('.y-scrollable').css({
+                'max-height': $('fieldset').height()
+            });
         }
-
-        // var dbtree = $config.uri.dbtree;
-        // $http.get(dbtree).success(function(data) {
-        //     $scope.platformOptions = data;
-        //     $scope.getDataAsset();
-        // });
 
         var assetUri = $config.uri.getdataasset + '/' + $scope.assetId;
         $scope.getDataAsset = function(){
@@ -63,7 +53,6 @@ define(['./module'], function (controllers) {
                 $scope.form.basic.path = data.assetHDFSPath;
                 $scope.form.basic.type = $scope.assetTypeOptions.indexOf(data.assetType).toString();
                 $scope.form.basic.platform = data.platform;
-                //$scope.getSystemOptions($scope.form.basic.platform);
                 $scope.form.basic.system = $scope.getSystemIndex(data.system).toString();
                 $scope.form.basic.schema = data.schema;
                 $scope.form.basic.partitions = data.partitions;
@@ -71,15 +60,6 @@ define(['./module'], function (controllers) {
         };
 
         $scope.getDataAsset();
-
-        // $scope.getPlatformIndex = function(platform) {
-        //     for (var i = 0; i < $scope.platformOptions.length; i++) {
-        //         if($scope.platformOptions[i].platform == platform){
-        //             return i;
-        //         }
-        //     };
-        //     return -1;
-        // };
 
         $scope.getSystemIndex = function(system) {
             for (var i = 0; i < $scope.systemOptions.length; i++) {
@@ -89,14 +69,6 @@ define(['./module'], function (controllers) {
             };
             return -1;
         }
-
-        // $scope.getSystemOptions = function(platformIndex){
-        //     if(platformIndex==undefined){
-        //         $scope.systemOptions = [];
-        //     }else{
-        //         $scope.systemOptions = $scope.platformOptions[platformIndex].systems;
-        //     }
-        // };
 
         $scope.updateHdfsPath = function(typeIndex){
             if(typeIndex != 0 ){
@@ -113,7 +85,7 @@ define(['./module'], function (controllers) {
 	        });
 	    };
 
-      $scope.addPatitionColumn = function() {
+        $scope.addPatitionColumn = function() {
 	        $scope.form.basic.partitions.push({
 	            name: '',
 	            format: "yyyyMMdd"
@@ -124,7 +96,7 @@ define(['./module'], function (controllers) {
 	        $scope.form.basic.schema.splice(index, 1);
 	    };
 
-      $scope.deletePartition = function(index) {
+        $scope.deletePartition = function(index) {
 	        $scope.form.basic.partitions.splice(index, 1);
 	    };
 
@@ -162,9 +134,6 @@ define(['./module'], function (controllers) {
                       basic: this.basic,
                       extra: {publishUrl: this.publishUrl}
                     };
-
-
-
                     $('#confirm-pu').modal('show');
                 }
             },

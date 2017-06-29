@@ -23,22 +23,22 @@ define(['./module'], function (filters) {
             var strLength = str.length;
             var windowWidth = 2000;
             try{
-              windowWidth = window.innerWidth;
-              console.log('Window Size: ' + windowWidth);
+                windowWidth = window.innerWidth;
+                console.log('Window Size: ' + windowWidth);
             }catch(e){
-              console.error(e);
+                console.error(e);
             }
 
             if(windowWidth < 1400 && strLength > 10){
-              return str.substring(0, 10) + '...';
+                return str.substring(0, 10) + '...';
             }else if(windowWidth < 1600 && strLength > 20){
-              return str.substring(0, 20) + '...';
+                return str.substring(0, 20) + '...';
             }else if(windowWidth < 1800 && strLength > 26){
-              return str.substring(0, 26) + '...';
+                return str.substring(0, 26) + '...';
             }else if(windowWidth < 2000 && strLength > 30){
-              return str.substring(0, 30) + '...';
+                return str.substring(0, 30) + '...';
             }else{
-              return str;
+                return str;
             }
         }
       });

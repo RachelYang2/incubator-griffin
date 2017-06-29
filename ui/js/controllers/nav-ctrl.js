@@ -16,51 +16,50 @@ limitations under the License.
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('NavCtrl', ['$scope', '$http', '$config', '$location', '$cookies', '$rootScope', '$timeout', function ($scope, $http, $config, $location, $cookies, $rootScope, $timeout) {
-      console.log('Navigation controller');
-      var cookieObjs = $cookies.getAll();
-      if(cookieObjs.ntAccount){
-        $rootScope.ntAccount = cookieObjs.ntAccount;
-        $rootScope.fullName = cookieObjs.fullName;
-      }else{
-        window.location.replace('/login/login.html');
-      }
+        console.log('Navigation controller');
+        var cookieObjs = $cookies.getAll();
+        if(cookieObjs.ntAccount){
+            $rootScope.ntAccount = cookieObjs.ntAccount;
+            $rootScope.fullName = cookieObjs.fullName;
+        }else{
+            window.location.replace('/login/login.html');
+        }
 
-      var adminGroup = ['lzhixing', 'yosha', 'wenzhao', 'aiye', 'lshao'];
-	    $rootScope.adminAccess = (adminGroup.indexOf($scope.ntAccount)!=-1);
+        var adminGroup = ['lzhixing', 'yosha', 'wenzhao', 'aiye', 'lshao'];
+	      $rootScope.adminAccess = (adminGroup.indexOf($scope.ntAccount)!=-1);
 
       // $scope.test = 'test';
-      $scope.isActive = function (route) {
-          return $location.path().indexOf(route) == 0;
-          //return $location.path() == route;
-      }
-
-      var timer = null;
-      $("#searchBox").off("keyup");
-      $("#searchBox").on("keyup", function(event){
-        if(timer){
-          $timeout.cancel(timer);
+        $scope.isActive = function (route) {
+            return $location.path().indexOf(route) == 0;
+            //return $location.path() == route;
         }
-        var searchValue = event.target.value;
 
-        if(searchValue != undefined){
-            timer = $timeout(function(){
-              $rootScope.keyword = searchValue.trim();
-            }, 500);
+        var timer = null;
+        $("#searchBox").off("keyup");
+        $("#searchBox").on("keyup", function(event){
+          if(timer){
+              $timeout.cancel(timer);
+          }
+          var searchValue = event.target.value;
+  
+          if(searchValue != undefined){
+              timer = $timeout(function(){
+                  $rootScope.keyword = searchValue.trim();
+              }, 500);
+          }
+        });
+  
+        $scope.$on('$routeChangeStart', function(next, current) {
+            $("#searchBox").val('');
+            $rootScope.keyword = '';
+        });
+
+        $scope.logout = function(){
+            $rootScope.ntAccount = undefined;
+            $rootScope.fullName = undefined;
+            $cookies.remove('ntAccount');
+            $cookies.remove('fullName');
+            window.location.replace('/login/login.html');
         }
-      });
-
-      $scope.$on('$routeChangeStart', function(next, current) {
-        $("#searchBox").val('');
-        $rootScope.keyword = '';
-      });
-
-      $scope.logout = function(){
-        $rootScope.ntAccount = undefined;
-        $rootScope.fullName = undefined;
-        $cookies.remove('ntAccount');
-        $cookies.remove('fullName');
-        window.location.replace('/login/login.html');
-      }
-
     }]);
 });

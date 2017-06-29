@@ -12,59 +12,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['./module'], function(controllers) {
+define(['./module'],
+function(controllers) {
     'use strict';
-    controllers.controller('BigChartCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope', '$location',function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope,$location) {
+    controllers.controller('BigChartCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope', '$location',
+    function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope, $location) {
 
-      var echarts = require('echarts');
+        var echarts = require('echarts');
 
-      pageInit();
+        pageInit();
 
-      function pageInit() {
-        resizeBigChart();
-        // $scope.bigChart = echarts.init($('#bigChartDiv').get(0), 'dark');
-        $rootScope.bigChart = echarts.init($('#bigChartDiv').get(0), 'dark');
-      }
+        function pageInit() {
+            resizeBigChart();
+            $rootScope.bigChart = echarts.init($('#bigChartDiv').get(0), 'dark');
+        }
 
-      function resizeBigChart() {
-        document.getElementById('bigChartDiv').style.width = window.innerWidth+'px';
-        document.getElementById('bigChartDiv').style.height = window.innerHeight+'px';
-      }
+        function resizeBigChart() {
+            document.getElementById('bigChartDiv').style.width = window.innerWidth + 'px';
+            document.getElementById('bigChartDiv').style.height = window.innerHeight + 'px';
+        }
 
-      $scope.closeBigChart = function(){
-        console.log('close big chart!');
-        // $('#bigChartContainer').hide();
-        // history.back();
-        $location.path('/health');
-        // $('#mainWindow').show();
-      }
+        $scope.closeBigChart = function() {
+            console.log('close big chart!');
+            $location.path('/health');
+        }
 
-      $scope.downloadSample = function() {
-        $rootScope.$broadcast('downloadSample', $scope.selectedModel);
-      }
+        $scope.downloadSample = function() {
+            $rootScope.$broadcast('downloadSample', $scope.selectedModel);
+        }
 
-      $(window).resize(function() {
-        console.log('big chart resize');
-          resizeBigChart();
-          $rootScope.bigChart.resize();
-      });
+        $(window).resize(function() {
+            console.log('big chart resize');
+            resizeBigChart();
+            $rootScope.bigChart.resize();
+        });
 
-      // $rootScope.showBigChart = function(option) {
-      //   $scope.selectedModel = option.title.text;
-      //   $('#bigChartContainer').show();
-      //   // $('#mainWindow').hide();
-      //   $scope.bigChart.clear();
-      //   $scope.bigChart.setOption(option);
-      // }
-         if($rootScope.showBigChart==undefined){
-              $rootScope.showBigChart = function(option) {
-              $scope.selectedModel = option.title.text;
-              $('#bigChartContainer').show();
-              // $('#mainWindow').hide();
-              $rootScope.bigChart.clear();
-              $rootScope.bigChart.setOption(option);
+        if ($rootScope.showBigChart == undefined) {
+            $rootScope.showBigChart = function(option) {
+                $scope.selectedModel = option.title.text;
+                $('#bigChartContainer').show();
+                $rootScope.bigChart.clear();
+                $rootScope.bigChart.setOption(option);
             }
-          }
+        }
 
     }]);
 });

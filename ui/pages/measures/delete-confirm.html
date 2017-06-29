@@ -14,79 +14,65 @@ limitations under the License.
 
 -->
 <div class="container-fluid" id="deleteContent" style="overflow:auto;">
-  <div class="row">
-    <h5 class="over-title margin-bottom-15">Basic information</h5>
-  </div><!--//row-->
-  <div class="row">
-
-    <div  class="col-lg-12 col-md-12 col-sm-12">
-      <div id="viewrule-definition" class="viewrule-content">
-        <div class="row">
-          <label class="col-md-4 col-lg-4 col-sm-4">
-            Measure Name:
-          </label>
-
-          <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
-            {{deletedRow.name}}
-          </div>
-        </div>
-
-        <div class="row">
-          <label class="col-md-4 col-lg-4 col-sm-4">
-            Measure Definition:
-          </label>
-
-          <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
-            {{deletedRow.description}}
-          </div>
-        </div>
-
-        <div class="row">
-          <label class="col-md-4 col-lg-4 col-sm-4">
-            Measure Type:
-          </label>
-
-          <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
-            {{deletedRow.type|strmap:'modeltype'}}
-          </div>
-        </div>
-
-        <div class="row">
-          <label for="systemSelector" class="col-md-4 col-lg-4 col-sm-4">
-            Organization:
-          </label>
-
-          <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
-            {{deletedRow.organization|strmap:'modelsystem'}}
-          </div>
-        </div>
-
-        <div class="row">
-          <label class="col-md-4 col-lg-4 col-sm-4">
-            DataAsset:
-          </label>
-
-          <div class="col-md-8 col-lg-8 col-sm-8" style="color: #fff">
-            {{sourceTable}}&nbsp;&nbsp;{{targetTable}}
-          </div>
-        </div>
-
-        <div class="row">
-          <label class="col-md-4 col-lg-4 col-sm-4">
-            Owner:
-          </label>
-
-          <div class="col-md-8 col-lg-8 col-sm-8" style="color: #fff">
-            {{deletedRow.owner}}
-          </div>
-        </div>
-
-
-      </div>
+    <div class="row">
+        <h5 class="over-title margin-bottom-15">
+            Basic information
+        </h5>
     </div>
-
-
-  </div><!--//row-->
-
-
+    <!--//row-->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div id="viewrule-definition" class="viewrule-content">
+                <div class="row">
+                    <label class="col-md-4 col-lg-4 col-sm-4">
+                        Measure Name:
+                    </label>
+                    <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
+                        {{deletedRow.name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-lg-4 col-sm-4">
+                        Measure Definition:
+                    </label>
+                    <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
+                        {{deletedRow.description}}
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-lg-4 col-sm-4">
+                        Measure Type:
+                    </label>
+                    <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
+                        {{deletedRow.type|strmap:'modeltype'}}
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="systemSelector" class="col-md-4 col-lg-4 col-sm-4">
+                        Organization:
+                    </label>
+                    <div class="col-md-8 col-lg-8 col-sm-8 " style="color: #fff">
+                        {{deletedRow.organization|strmap:'modelsystem'}}
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-lg-4 col-sm-4">
+                        DataAsset:
+                    </label>
+                    <div class="col-md-8 col-lg-8 col-sm-8" style="color: #fff">
+                        {{sourceTable}}&nbsp;&nbsp;{{targetTable}}
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-lg-4 col-sm-4">
+                        Owner:
+                    </label>
+                    <div class="col-md-8 col-lg-8 col-sm-8" style="color: #fff">
+                        {{deletedRow.owner}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--//row-->
 </div>

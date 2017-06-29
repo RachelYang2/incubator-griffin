@@ -16,8 +16,7 @@ limitations under the License.
 define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('HealthCtrl', ['$scope', '$http', '$config', '$location','$timeout', '$route', '$barkChart', '$rootScope', function ($scope, $http, $config, $location, $timeout, $route, $barkChart, $rootScope) {
-      console.log('health controller');
-      // var url="/js/controllers/heatmap.json";
+        console.log('health controller');
 
         var echarts = require('echarts');
         var formatUtil = echarts.format;
@@ -27,39 +26,42 @@ define(['./module'], function (controllers) {
         $scope.orgs = [];
         $scope.dataData = [];
         $scope.finalData = [];
+
         function pageInit() {
             $scope.$emit('initReq');
 
-//            var url = $config.uri.heatmap;
-             var url_dashboard = $config.uri.dashboard ;
-//            var url_dashboard = 'data.json';
-             var url_organization = $config.uri.organization;
-//            var url_organization = 'org.json';
+            var url_dashboard = $config.uri.dashboard ;
+            // var url_dashboard = 'data.json';
+            var url_organization = $config.uri.organization;
+            // var url_organization = 'org.json';
             $http.get(url_organization).then(function successCallback(res){
-               var orgNode = null;
-               angular.forEach(res.data, function(value,key) {
+                var orgNode = null;
+                angular.forEach(res.data, function(value,key) {
                     orgNode = new Object();
                     $scope.orgs.push(orgNode);
                     orgNode.name = key;
                     orgNode.assetMap = value;
-               });
-               $scope.originalOrgs = angular.copy($scope.orgs);
-                 $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
-//                 $http.get(url_dashboard).then(function successCallback(data){
+                });
+                $scope.originalOrgs = angular.copy($scope.orgs);
+                    $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
+                    // $http.get(url_dashboard).then(function successCallback(data){
                     angular.forEach(data.data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
                             return a.tmst - b.tmst;
                         }
                     });
-                    $scope.originalData = angular.copy(data.data);
 
+                    $scope.originalData = angular.copy(data.data);
                     $scope.myData = angular.copy($scope.originalData.hits.hits);
                     $scope.metricName = [];
+
                     for(var i = 0;i<$scope.myData.length;i++){
                         $scope.metricName.push($scope.myData[i]._source.name);
                     }
+
                     $scope.metricNameUnique = [];
+
                     angular.forEach($scope.metricName,function(name){
                         if($scope.metricNameUnique.indexOf(name) === -1){
                             $scope.dataData[$scope.metricNameUnique.length] = new Array();
@@ -74,6 +76,7 @@ define(['./module'], function (controllers) {
                             }
                         }
                     }
+
                     angular.forEach($scope.originalOrgs,function(sys,parentIndex){
                         var node = null;
                         node = new Object();
@@ -95,62 +98,54 @@ define(['./module'], function (controllers) {
                     $scope.originalData = angular.copy($scope.finalData);
                     renderTreeMap($scope.finalData);
                 });
-
             });
-//            $http.get(url).success(function(res) {
-//                renderTreeMap(res);
-//            });
         }
 
         function renderTreeMap(res) {
-                function parseData(data) {
-                    var sysId = 0;
-                    var metricId = 0;
-                    var result = [];
-                    angular.forEach(res,function(sys,key){
-                        console.log(sys);
+            function parseData(data) {
+                var sysId = 0;
+                var metricId = 0;
+                var result = [];
+                angular.forEach(res,function(sys,key){
+                    var item = {};
+                    item.id = 'id_'+sysId;
+                    item.name = sys.name;
 
-                        var item = {};
-                        item.id = 'id_'+sysId;
-                        item.name = sys.name;
+                    if (sys.metrics != undefined) {
+                        item.children = [];
+                        angular.forEach(sys.metrics,function(metric,key){
+                            var itemChild = {
+                                id: 'id_' + sysId + '_' + metricId,
+                                name: metric.name,
+                                // value: metric.dq,
+                                value: 1,
+                                dq: metric.dq,
+                                sysName: sys.name,
+                                itemStyle: {
+                                    normal: {
+                                        color: '#4c8c6f'
+                                    }
+                                },         
+                            };
 
-                        if (sys.metrics != undefined) {
-                            item.children = [];
-                            angular.forEach(sys.metrics,function(metric,key){
-                                var itemChild = {
-                                    id: 'id_' + sysId + '_' + metricId,
-                                    name: metric.name,// + '(' + metric.dq + '%)',
-                                    // value: metric.dq,
-                                    value: 1,
-                                    dq: metric.dq,
-                                    sysName: sys.name,
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#4c8c6f'
-                                        }
-                                    },
-                                    // link:'/#/detailed/'+metric.name,
-                                    // target:'self',
-                                };
-                                if (metric.dqfail == 1) {
-                                    itemChild.itemStyle.normal.color = '#ae5732';
-                                } else {
-                                    itemChild.itemStyle.normal.color = '#005732';
-                                }
-                                item.children.push(itemChild);
-                                metricId++;
+                            if (metric.dqfail == 1) {
+                                itemChild.itemStyle.normal.color = '#ae5732';
+                            } else {
+                                itemChild.itemStyle.normal.color = '#005732';
+                            }
+
+                            item.children.push(itemChild);
+                            metricId++;
                             });
                         }
 
                         result.push(item);
-
                         sysId ++;
                     });
                     return result;
                 }
 
                 var data = parseData(res);
-                console.log(data);
 
                 function getLevelOption() {
                     return [
@@ -223,18 +218,10 @@ define(['./module'], function (controllers) {
                 $scope.myChart.setOption(option);
 
                 $scope.myChart.on('click', function(param) {
-                    // if (param.data.sysName) {
-                    //     $location.path('/metrics/' + param.data.sysName);
-                    //     $scope.$apply();
-                    //     return false;
-                    // }
-                    // param.event.event.preventDefault();
                     if (param.data.name) {
-                        // $location.path('/detailed/'+param.data.name);
                         window.location.href = '/#!/detailed/'+param.data.name;
                     }
                 });
-
         }
 
         $scope.$on('resizeHandler', function(e) {

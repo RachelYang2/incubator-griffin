@@ -22,10 +22,8 @@ define(['./module'], function(controllers) {
         }
 
         $(window).resize(function() {
-
             console.log('main resize');
             $scope.resizeMainWindow();
-
             $scope.$broadcast('resizeHandler');
         });
 
