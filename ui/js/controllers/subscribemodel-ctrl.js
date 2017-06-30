@@ -64,7 +64,6 @@ define(['./module'], function(controllers) {
                             }
                         });
                     }
-
                 });
             }
             $scope.dbList = dbList;
@@ -76,11 +75,6 @@ define(['./module'], function(controllers) {
                 initializeModelsTable();
                 // $scope.changeCB();
             });
-
-
-
-
-
         });
 
         $http.get(allModelsUrl).success(function(data){
@@ -345,7 +339,6 @@ define(['./module'], function(controllers) {
 
         $scope.changeCB = function(node, evt) {
             // $('input[type="checkbox"]').change(function(e) {
-
                   var checked = $(evt.target).prop("checked"),
                       container = $(evt.target).parent(),
                       siblings = container.siblings();
@@ -355,8 +348,7 @@ define(['./module'], function(controllers) {
                     checked: checked
                   });
 
-
-                   function checkSiblings(el) {
+                    function checkSiblings(el) {
 
                     var parent = el.parent().parent().parent(),
                         all = true;
@@ -366,33 +358,23 @@ define(['./module'], function(controllers) {
                     });
 
                     if (all && checked) {
-
                       parent.children('input[type="checkbox"]').prop({
                         indeterminate: false,
                         checked: checked
                       });
-
                       checkSiblings(parent);
-
                     } else if (all && !checked) {
-
                       parent.children('input[type="checkbox"]').prop("checked", checked);
                       parent.children('input[type="checkbox"]').prop("indeterminate", (parent.find('input[type="checkbox"]:checked').length > 0));
                       checkSiblings(parent);
-
                     } else {
-
                       el.parents("li").children('input[type="checkbox"]').prop({
                         indeterminate: true,
                         checked: false
                       });
-
                     }
-
                   };
-
                   checkSiblings(container);
-
                   updateModelsTable();
             //}
             // setTimeout(function() {
@@ -400,8 +382,5 @@ define(['./module'], function(controllers) {
             // }, 300);
             //updateModelsTable();
         }
-
-
-
     }]);
 });

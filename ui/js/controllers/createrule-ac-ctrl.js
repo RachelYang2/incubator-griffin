@@ -13,9 +13,9 @@ limitations under the License.
 
  */
 
-define(['./module'], function(controllers) {
+define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('CreateRuleACCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter', function($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {
+    controllers.controller('CreateRuleACCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter', function ($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {
         console.log('Create rule controller');
         $scope.currentStep = 1;
         //for dev purpose
@@ -28,14 +28,13 @@ define(['./module'], function(controllers) {
         $scope.dataAsset = '';
         $scope.basic = {};
         $scope.rules = '';
-        
         var dbtreeUrl = $config.uri.dbtree;
         var schemaDefinitionUrl = $config.uri.schemadefinition;
 
         $http.get(dbtreeUrl).then(function successCallback(data) {
             var dbList = [];
             if (data.data) {
-                angular.forEach(data.data,function(db,key){
+                angular.forEach(data.data, function (db, key) {
                     console.log(db);
                     var dbNode = {
                         name: key,
@@ -44,7 +43,7 @@ define(['./module'], function(controllers) {
                     };
                     dbList.push(dbNode);
                     if (db) {
-                        angular.forEach(db,function(table){
+                        angular.forEach(db, function (table) {
                             var dsNode = {
                                 name: table.tableName,
                                 l2: true,
@@ -52,21 +51,26 @@ define(['./module'], function(controllers) {
                             };
                             dbNode.children.push(dsNode);
                             dsNode.parent = db;
-                            if (table.sd.cols) {
-                                table.sd.cols.sort(function(a, b){
-                                  return (a.name<b.name?-1:(a.name>b.name?1:0));
-                                });
-                                angular.forEach(table.sd.cols,function(col) {
-                                    var schemaNode = {
-                                        name: col.name,
-                                        type: col.type,
-                                        l3: true
-                                    };
-                                });
+                            if (table.sd) {
+                                if (table.sd.cols) {
+                                    table.sd.cols.sort(function (a, b) {
+                                        return (a.name < b.name
+                                            ? -1
+                                            : (a.name > b.name
+                                                ? 1
+                                                : 0));
+                                    });
+                                    angular.forEach(table.sd.cols, function (col) {
+                                        var schemaNode = {
+                                            name: col.name,
+                                            type: col.type,
+                                            l3: true
+                                        };
+                                    });
+                                }
                             }
-
                         });
-                    };
+                    }
                 });
                 $scope.dbList = dbList;
                 $scope.dbListTarget = angular.copy(dbList);
@@ -74,17 +78,21 @@ define(['./module'], function(controllers) {
         });
 
         //trigger after select schema for src
-        $scope.$watch('currentNode', function(newValue) {
+        $scope.$watch('currentNode', function (newValue) {
             $scope.selection = [];
             $scope.selectedAll = false;
             if (newValue) {
-                $http.get(schemaDefinitionUrl+ '/' + newValue.parent[0].dbName+'/table/'+newValue.name).then(function successCallback(data) {
-                $scope.schemaCollection = data.data.sd.cols;
-                });
+                if (newValue.parent) {
+                    $http.get(schemaDefinitionUrl + '/' + newValue.parent[0].dbName + '/table/' + newValue.name).then(function successCallback(data) {
+                        if (data.data) {
+                            $scope.schemaCollection = data.data.sd.cols;
+                        }
+                    });
+                }
             }
         });
 
-        $scope.selectNodeLabelTarget = function(selectedNode) {
+        $scope.selectNodeLabelTarget = function (selectedNode) {
             //remove highlight from previous node
             if ($scope.currentNodeTarget && $scope.currentNodeTarget.selected) {
                 $scope.currentNodeTarget.selected = undefined;
@@ -106,7 +114,7 @@ define(['./module'], function(controllers) {
         };
 
         //trigger after select schema
-        $scope.$watch('currentNodeTarget', function(newValue) {
+        $scope.$watch('currentNodeTarget', function (newValue) {
             console.log('currentNodeTarget');
             console.log($scope.currentNodeTarget);
             console.log(newValue);
@@ -114,15 +122,17 @@ define(['./module'], function(controllers) {
             $scope.selectedAllTarget = false;
 
             if (newValue) {
-                $http.get(schemaDefinitionUrl + '/' + newValue.parent[0].dbName+'/table/'+newValue.name).then(function successCallback(data) {
+                $http.get(schemaDefinitionUrl + '/' + newValue.parent[0].dbName + '/table/' + newValue.name).then(function successCallback(data) {
                     console.log(data);
-                    $scope.schemaCollectionTarget = data.data.sd.cols;
-                    console.log($scope.schemaCollectionTarget);
+                    if (data.data) {
+                        $scope.schemaCollectionTarget = data.data.sd.cols;
+                    }
                 });
             }
-            if($scope.currentNodeTarget)
+            if ($scope.currentNodeTarget) {
                 $scope.dataAsset = $scope.currentNodeTarget.name + ',' + $scope.currentNode.name;
                 console.log($scope.dataAsset);
+            }
         });
         //column selection
 
@@ -133,15 +143,12 @@ define(['./module'], function(controllers) {
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
                 $scope.selectedAll = false;
-            }
-            // is newly selected
-
-            else {
+            } else {
                 $scope.selection.push(value);
             }
         };
 
-        $scope.toggleAll = function() {
+        $scope.toggleAll = function () {
             if ($scope.selectedAll) {
                 $scope.selectedAll = true;
             } else {
@@ -149,29 +156,27 @@ define(['./module'], function(controllers) {
             }
 
             $scope.selection = [];
-            angular.forEach($scope.schemaCollection, function(item) {
+            angular.forEach($scope.schemaCollection, function (item) {
                 item.selected = $scope.selectedAll;
                 if ($scope.selectedAll) {
                     $scope.selection.push($scope.currentNode.name + '.' + item.name);
                 }
             });
-        }
+        };
 
-        $scope.toggleSelectionTarget = function($event) {
+        $scope.toggleSelectionTarget = function ($event) {
             var value = $event.target.value;
             var idx = $scope.selectionTarget.indexOf(value);
             // is currently selected
             if (idx > -1) {
                 $scope.selectionTarget.splice(idx, 1);
                 $scope.selectedAllTarget = false;
-            }
-            // is newly selected
-            else {
+            } else {
                 $scope.selectionTarget.push(value);
             }
         };
 
-        $scope.toggleAllTarget = function() {
+        $scope.toggleAllTarget = function () {
             if ($scope.selectedAllTarget) {
                 $scope.selectedAllTarget = true;
             } else {
@@ -179,7 +184,7 @@ define(['./module'], function(controllers) {
             }
 
             $scope.selectionTarget = [];
-            angular.forEach($scope.schemaCollectionTarget, function(item) {
+            angular.forEach($scope.schemaCollectionTarget, function (item) {
                 item.selected = $scope.selectedAllTarget;
                 if ($scope.selectedAllTarget) {
                     $scope.selectionTarget.push($scope.currentNodeTarget.name + '.' + item.name);
@@ -188,47 +193,31 @@ define(['./module'], function(controllers) {
                     console.log($scope.currentNodeTarget.parent);
                 }
             });
-        }
+        };
 
-        $scope.toggleSelectionPK = function($event) {
+        $scope.toggleSelectionPK = function ($event) {
             var value = $event.target.value;
             var idx = $scope.selectionPK.indexOf(value);
             // is currently selected
             if (idx > -1) {
                 $scope.selectionPK.splice(idx, 1);
                 $scope.selectedAllPK = false;
-            }
-            // is newly selected
-
-            else {
+            } else {
                 $scope.selectionPK.push(value);
             }
         };
 
-        $scope.toggleAllPK = function() {
+        $scope.toggleAllPK = function () {
             $scope.selectionPK = [];
             if ($scope.selectedAllPK) {
                 $scope.selectedAllPK = true;
-                angular.forEach($scope.selectionTarget, function(item) {
+                angular.forEach($scope.selectionTarget, function (item) {
                     $scope.selectionPK.push(item);
                 });
             } else {
                 $scope.selectedAllPK = false;
             }
         };
-
-        $scope.$on('$viewContentLoaded', function() {
-            $scope.$emit('initReq');
-            resizeWindow();
-        });
-
-        $scope.$on('resizeHandler', function(e) {
-            if ($route.current.$$route.controller == "CreateRuleACCtrl") {
-                $scope.$emit('initReq');
-                resizeWindow();
-            }
-        });
-
         function resizeWindow() {
             var stepSelection = '.formStep[id=step-' + $scope.currentStep + ']';
             $(stepSelection).css({
@@ -236,27 +225,53 @@ define(['./module'], function(controllers) {
             });
             document.getElementByTag('fieldset').style.minHeight = $(stepSelection).height() - $(stepSelection + '>.stepDesc').height() - $('.btn-container').height() - 80;
             $('.y-scrollable').css({
-                'max-height': $('fieldset').height()- $('.add-dataset').outerHeight()
+                'max-height': $('fieldset').height() - $('.add-dataset').outerHeight()
             });
 
         }
+        $scope.$on('$viewContentLoaded', function () {
+            $scope.$emit('initReq');
+            resizeWindow();
+        });
+
+        $scope.$on('resizeHandler', function () {
+            if ($route.current.$$route.controller === "CreateRuleACCtrl") {
+                $scope.$emit('initReq');
+                resizeWindow();
+            }
+        });
 
         $scope.ruleTypes = $filter('strarr')('modeltype');//['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics'];
         $scope.scheduleTypes = $filter('strarr')('scheduletype');//['Daily', 'Weekly', 'Monthly', 'Hourly'];
         $scope.ruleSystems = $filter('strarr')('modelsystem');//['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
-        $scope.matchFunctions = ['==', '!==', '>', '>=','<',"<="];
+        $scope.matchFunctions = ['==', '!==', '>', '>=', '<', "<="];
 
+        var formValidation = function (step) {
+            //  return true;//for dev purpose
+            if (step === undefined) {
+                step = $scope.currentStep;
+            }
+            if (step === 1) {
+                return $scope.selection && $scope.selection.length > 0;
+            } else if (step === 2) {
+                return ($scope.selectionTarget && $scope.selectionTarget.length > 0)//at least one target is selected
+                        && !(($scope.currentNode.name === $scope.currentNodeTarget.name) && ($scope.currentNode.parent.name === $scope.currentNodeTarget.parent.name));//target and source should be different
+            } else if (step === 3) {
+                return $scope.selectionTarget && $scope.selectionTarget.length === $scope.mappings.length
+                        && $scope.mappings.indexOf('') === -1 && !existDuplicatedElement($scope.mappings);
+            }
+            return false;
+        };
         // Initial Value
         $scope.form = {
-            next: function(form) {
+            next: function (form) {
                 if (formValidation()) {
                     nextStep();
                 } else {
-                    var field = null
-                      , firstError = null ;
+                    var field = null, firstError = null;
                     for (field in form) {
-                        if (field[0] != '$') {
-                            if (firstError === null  && !form[field].$valid) {
+                        if (field[0] !== '$') {
+                            if (firstError === null && !form[field].$valid) {
                                 firstError = form[field].$name;
                             }
 
@@ -265,15 +280,13 @@ define(['./module'], function(controllers) {
                             }
                         }
                     }
-
-                    //  angular.element('.ng-invalid[name=' + firstError + ']').focus();
                     errorMessage($scope.currentStep);
                 }
             },
-            prev: function(form) {
+            prev: function () {
                 prevStep();
             },
-            goTo: function(form, i) {
+            goTo: function (form, i) {
                 if (parseInt($scope.currentStep) > parseInt(i)) {
                     goToStep(i);
                 } else {
@@ -287,12 +300,12 @@ define(['./module'], function(controllers) {
                     }
                 }
             },
-            submit: function(form) {
+            submit: function (form) {
                 if (!form.$valid) {
                     var field = null
                       , firstError = null ;
                     for (field in form) {
-                        if (field[0] != '$') {
+                        if (field[0] !== '$') {
                             if (firstError === null  && !form[field].$valid) {
                                 firstError = form[field].$name;
                             }
@@ -308,47 +321,48 @@ define(['./module'], function(controllers) {
                     form.$setPristine();
                     var rule = '';
                     this.data={
-                        "name":$scope.basic.name,
-                        "description":$scope.basic.desc,
-                        "organization":$scope.basic.system,
-                        "type":$scope.basic.type,
-                        "source":{
-                            "type":"HIVE",
-                            "version":"1.2",
-                            "config":{
-                                "database":$scope.currentNode.parent[0].dbName,
-                                "table.name":$scope.currentNode.name,
-                            },
+                        name:$scope.basic.name,
+                        description:$scope.basic.desc,
+                        organization:$scope.basic.system,
+                        type:$scope.basic.type,
+                        source:{
+                            type:"HIVE",
+                            version:"1.2",
+                            config:{
+                                database:$scope.currentNode.parent[0].dbName,
+                                "table.name":$scope.currentNode.name
+                            }
                         },
-                        "target":{
-                            "type":"HIVE",
-                            "version":"1.2",
-                            "config":{
-                                "database":$scope.currentNodeTarget.parent[0].dbName,
-                                "table.name":$scope.currentNodeTarget.name,
-                            },
+                        target:{
+                            type:"HIVE",
+                            version:"1.2",
+                            config:{
+                                database:$scope.currentNodeTarget.parent[0].dbName,
+                                "table.name":$scope.currentNodeTarget.name
+                            }
                         },
-                        "evaluateRule":{
-                            "rules":'',
+                        evaluateRule:{
+                            rules:''
                         },
-                        "owner":$scope.basic.owner,
-                        mappings:[],
+                        owner:$scope.basic.owner,
+                        mappings:[]
                     };
 
                     $scope.dataAsset = $scope.currentNodeTarget.name + ',' + $scope.currentNode.name;
 
-                    var mappingRule = function(src, tgt, matches) {
+                    var mappingRule = function (src, tgt, matches) {
                         var s = src.split('.');
                         var t = tgt.split('.');
                         return "$source['" + s[1] + "'] " + matches + " $target['" + t[1] + "']";
-                    }
-                    var rules = $scope.selectionTarget.map(function(item, i) {
+                    };
+                    var rules = $scope.selectionTarget.map(function (item, i) {
                         return mappingRule($scope.selection[i], item, $scope.matches[i]);
                     });
                     rule = rules.join(" AND ");
                     $scope.rules = rule;
                     this.data.evaluateRule.rules = rule;
-                    for(var i =0; i < $scope.selectionTarget.length; i ++){
+                    var i;
+                    for(i =0; i < $scope.selectionTarget.length; i += 1){
                       this.data.mappings.push({target:$scope.selectionTarget[i],
                           src:$scope.mappings[i],
                           matchMethod: $scope.matches[i],
@@ -360,61 +374,60 @@ define(['./module'], function(controllers) {
             },
 
             save: function() {
-                //::TODO: Need to save the data to backend with POST/PUT method
                 console.log(JSON.stringify($scope.form.data));
                 var newModel = $config.uri.addModels;
                 $http.post(newModel, this.data).then(function successCallback(data) {
-                	console.log(data);
-                    if(data.data=='CREATE_MEASURE_FAIL_DUPLICATE'){
+                    console.log(data);
+                    if(data.data === 'CREATE_MEASURE_FAIL_DUPLICATE'){
                         toaster.pop('error', 'Please modify the name of measure, because there is already a same measure in database ', data.message);
                         return;
                     }
-
-	                $('#confirm').on('hidden.bs.modal', function(e) {
-	                    $('#confirm').off('hidden.bs.modal');
-	                    $location.path('/rules').replace();
-	                    $scope.$apply();
-	                });
-	                $('#confirm').modal('hide');
+                    $('#confirm').on('hidden.bs.modal', function (e) {
+                        $('#confirm').off('hidden.bs.modal');
+                        $location.path('/rules').replace();
+                        $scope.$apply();
+                    });
+                    $('#confirm').modal('hide');
                 },function errorCallback(response) {
                     toaster.pop('error', 'Save measure failed, please try again!', response.message);
                 });
-            },
-        }
+            }
+        };
 
-        var nextStep = function() {
+        var nextStep = function () {
             $scope.currentStep++;
-            $timeout(function(){
+            $timeout(function () {
                 resizeWindow();
             }, 0);
-        }
+        };
 
-        var prevStep = function() {
+        var prevStep = function () {
             $scope.currentStep--;
-            $timeout(function(){
+            $timeout(function () {
                 resizeWindow();
             }, 0);
-        }
+        };
 
-        var goToStep = function(i) {
+        var goToStep = function (i) {
             $scope.currentStep = i;
-            $timeout(function(){
+            $timeout(function () {
                 resizeWindow();
             }, 0);
-        }
+        };
 
-        $scope.$watch('currentStep', function(newValue){
-          if(newValue == 3){ //step 3
+        $scope.$watch('currentStep', function (newValue) {
+          if(newValue === 3){ //step 3
             if($scope.selectionTarget.length < $scope.mappings.length){
               $scope.mappings.splice($scope.selectionTarget.length);
             }
           }
         });
 
-        var existDuplicatedElement = function(arr){
-            for (var i = 0; i < arr.length; i++) {
-                for (var j = i+1; j < arr.length; j++) {
-                    if(arr[i] == arr[j]){
+        var existDuplicatedElement = function (arr) {
+            var i,j;
+            for (i = 0; i < arr.length; i++) {
+                for (j = i+1; j < arr.length; j++) {
+                    if(arr[i] === arr[j]){
                         return true;
                     }
                 };
@@ -423,26 +436,8 @@ define(['./module'], function(controllers) {
         };
 
         //validation only happens when going forward
-        var formValidation = function(step) {
-            //  return true;//for dev purpose
-            if (step == undefined) {
-                step = $scope.currentStep;
-            }
-            if (step == 1) {
-                return $scope.selection && $scope.selection.length > 0;
-            } else if (step == 2) {
-                return ($scope.selectionTarget && $scope.selectionTarget.length > 0)//at least one target is selected
-                        && !(($scope.currentNode.name == $scope.currentNodeTarget.name)&&($scope.currentNode.parent.name == $scope.currentNodeTarget.parent.name));//target and source should be different
-            } else if (step == 3) {
-                return $scope.selectionTarget && $scope.selectionTarget.length == $scope.mappings.length
-                        && $scope.mappings.indexOf('') == -1 && !existDuplicatedElement($scope.mappings);
-            } else if (step == 4) {
 
-            }
-            return false;
-        }
-
-        var errorMessage = function(i, msg) {
+        var errorMessage = function (i, msg) {
             var errorMsgs = ['Please select at least one attribute!', 'Please select at least one attribute in target, make sure target is different from source!', 'Please make sure to map each target to a unique source.', 'please complete the form in this step before proceeding'];
             if (!msg) {
                 toaster.pop('error', 'Error', errorMsgs[i - 1], 0);
@@ -450,6 +445,6 @@ define(['./module'], function(controllers) {
                 toaster.pop('error', 'Error', msg, 0);
             }
         };
-    }
+                }
     ]);
-});
+    });

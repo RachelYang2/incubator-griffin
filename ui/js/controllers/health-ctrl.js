@@ -17,7 +17,6 @@ define(['./module'], function (controllers) {
     'use strict';
     controllers.controller('HealthCtrl', ['$scope', '$http', '$config', '$location','$timeout', '$route', '$barkChart', '$rootScope', function ($scope, $http, $config, $location, $timeout, $route, $barkChart, $rootScope) {
         console.log('health controller');
-
         var echarts = require('echarts');
         var formatUtil = echarts.format;
 
@@ -26,14 +25,14 @@ define(['./module'], function (controllers) {
         $scope.orgs = [];
         $scope.dataData = [];
         $scope.finalData = [];
-
         function pageInit() {
             $scope.$emit('initReq');
 
+//            var url = $config.uri.heatmap;
             var url_dashboard = $config.uri.dashboard ;
-            // var url_dashboard = 'data.json';
+//            var url_dashboard = 'data.json';
             var url_organization = $config.uri.organization;
-            // var url_organization = 'org.json';
+//            var url_organization = 'org.json';
             $http.get(url_organization).then(function successCallback(res){
                 var orgNode = null;
                 angular.forEach(res.data, function(value,key) {
@@ -41,27 +40,24 @@ define(['./module'], function (controllers) {
                     $scope.orgs.push(orgNode);
                     orgNode.name = key;
                     orgNode.assetMap = value;
-                });
-                $scope.originalOrgs = angular.copy($scope.orgs);
+               });
+               $scope.originalOrgs = angular.copy($scope.orgs);
                     $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
-                    // $http.get(url_dashboard).then(function successCallback(data){
+//                 $http.get(url_dashboard).then(function successCallback(data){
                     angular.forEach(data.data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
                             return a.tmst - b.tmst;
                         }
                     });
-
                     $scope.originalData = angular.copy(data.data);
+
                     $scope.myData = angular.copy($scope.originalData.hits.hits);
                     $scope.metricName = [];
-
                     for(var i = 0;i<$scope.myData.length;i++){
                         $scope.metricName.push($scope.myData[i]._source.name);
                     }
-
                     $scope.metricNameUnique = [];
-
                     angular.forEach($scope.metricName,function(name){
                         if($scope.metricNameUnique.indexOf(name) === -1){
                             $scope.dataData[$scope.metricNameUnique.length] = new Array();
@@ -76,7 +72,6 @@ define(['./module'], function (controllers) {
                             }
                         }
                     }
-
                     angular.forEach($scope.originalOrgs,function(sys,parentIndex){
                         var node = null;
                         node = new Object();
@@ -107,6 +102,8 @@ define(['./module'], function (controllers) {
                 var metricId = 0;
                 var result = [];
                 angular.forEach(res,function(sys,key){
+                    console.log(sys);
+
                     var item = {};
                     item.id = 'id_'+sysId;
                     item.name = sys.name;
@@ -116,8 +113,7 @@ define(['./module'], function (controllers) {
                         angular.forEach(sys.metrics,function(metric,key){
                             var itemChild = {
                                 id: 'id_' + sysId + '_' + metricId,
-                                name: metric.name,
-                                // value: metric.dq,
+                                name: metric.name,// + '(' + metric.dq + '%)',
                                 value: 1,
                                 dq: metric.dq,
                                 sysName: sys.name,
@@ -125,95 +121,89 @@ define(['./module'], function (controllers) {
                                     normal: {
                                         color: '#4c8c6f'
                                     }
-                                },         
+                                },
                             };
-
                             if (metric.dqfail == 1) {
                                 itemChild.itemStyle.normal.color = '#ae5732';
                             } else {
                                 itemChild.itemStyle.normal.color = '#005732';
                             }
-
                             item.children.push(itemChild);
                             metricId++;
-                            });
+                        });
+                    }
+                    result.push(item);
+                    sysId ++;
+                });
+                return result;
+            }
+
+            var data = parseData(res);
+            console.log(data);
+            function getLevelOption() {
+                return [
+                    {
+                        itemStyle: {
+                            normal: {
+                                borderWidth: 0,
+                                gapWidth: 6,
+                                borderColor: '#000'
+                            }
                         }
+                    },
 
-                        result.push(item);
-                        sysId ++;
-                    });
-                    return result;
-                }
+                    {
+                        itemStyle: {
+                            normal: {
+                                gapWidth: 1,
+                                borderColor: '#fff'
+                            }
+                        }
+                    }
+                ];
+            }
 
-                var data = parseData(res);
-
-                function getLevelOption() {
-                    return [
-                        {
-                            itemStyle: {
-                                normal: {
-                                    borderWidth: 0,
-                                    gapWidth: 6,
-                                    borderColor: '#000'
-                                }
+            var option = {
+                title: {
+                    text: 'Data Quality Metrics Heatmap',
+                    left: 'center'
+                },
+                backgroundColor: 'transparent',
+                tooltip: {
+                    formatter: function(info) {
+                        var dqFormat = info.data.dq>100?'':'%';
+                        return [
+                            '<span style="font-size:1.8em;">' + formatUtil.encodeHTML(info.data.sysName) + ' &gt; </span>',
+                            '<span style="font-size:1.5em;">' + formatUtil.encodeHTML(info.data.name)+'</span><br>',
+                            '<span style="font-size:1.5em;">dq : ' + info.data.dq.toFixed(2) + dqFormat + '</span>'
+                        ].join('');
+                    }
+                },
+                series: [
+                    {
+                        name:'System',
+                        type:'treemap',
+                        itemStyle: {
+                            normal: {
+                                borderColor: '#fff'
                             }
                         },
+                        levels: getLevelOption(),
+                        breadcrumb: {
+                            show: false
+                        },
+                        roam: false,
+                        nodeClick: 'link',
+                        data: data,
+                        // leafDepth: 1,
+                        width: '95%',
+                        bottom : 0
+                    }
+                ]
+            };
 
-                        {
-                            itemStyle: {
-                                normal: {
-                                    gapWidth: 1,
-                                    borderColor: '#fff'
-                                }
-                            }
-                        }
-                    ];
-                }
-
-                var option = {
-
-                    title: {
-                        text: 'Data Quality Metrics Heatmap',
-                        left: 'center'
-                    },
-
-                    backgroundColor: 'transparent',
-
-                    tooltip: {
-                        formatter: function(info) {
-                            var dqFormat = info.data.dq>100?'':'%';
-                            return [
-                                '<span style="font-size:1.8em;">' + formatUtil.encodeHTML(info.data.sysName) + ' &gt; </span>',
-                                '<span style="font-size:1.5em;">' + formatUtil.encodeHTML(info.data.name)+'</span><br>',
-                                '<span style="font-size:1.5em;">dq : ' + info.data.dq.toFixed(2) + dqFormat + '</span>'
-                            ].join('');
-                        }
-                    },
-
-                    series: [
-                        {
-                            name:'System',
-                            type:'treemap',
-                            itemStyle: {
-                                normal: {
-                                    borderColor: '#fff'
-                                }
-                            },
-                            levels: getLevelOption(),
-                            breadcrumb: {
-                                show: false
-                            },
-                            roam: false,
-                            nodeClick: 'link',
-                            data: data,
-                            // leafDepth: 1,
-                            width: '95%',
-                            bottom : 0
-                        }
-                    ]
-                };
-
-                resizeTreeMap();
+            resizeTreeMap();
+            if(document.getElementById('chart1')){
                 $scope.myChart = echarts.init(document.getElementById('chart1'), 'dark');
                 $scope.myChart.setOption(option);
 
@@ -222,6 +212,7 @@ define(['./module'], function (controllers) {
                         window.location.href = '/#!/detailed/'+param.data.name;
                     }
                 });
+            }
         }
 
         $scope.$on('resizeHandler', function(e) {
@@ -235,6 +226,5 @@ define(['./module'], function (controllers) {
         function resizeTreeMap() {
             $('#chart1').height( $('#mainWindow').height() - $('.bs-component').outerHeight() );
         }
-
     }]);
 });

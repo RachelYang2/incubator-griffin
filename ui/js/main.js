@@ -27,7 +27,8 @@ require.config({
 			'ngSmartTable': '../bower_components/angular-smart-table/dist/smart-table',
 			'ngAnimate': '../bower_components/angular-animate/angular-animate',
 			'ngToaster': '../bower_components/AngularJS-Toaster/toaster',
-			'ngCookies': '../bower_components/angular-cookies/angular-cookies',
+			// 'ngCookies': '../bower_components/angular-cookies/angular-cookies',
+			'angularCookies': '../bower_components/angular-cookies/angular-cookies',
 
 	    'jquery': '../bower_components/jquery/dist/jquery',
 	    'bootstrap': '../bower_components/bootstrap/dist/js/bootstrap',
@@ -57,9 +58,13 @@ require.config({
 			deps: ['angular', 'ngAnimate'],
 			exports: 'ngToaster'
 		},
-		'ngCookies': {
-			deps: ['angular'],
-			exports: 'ngCookies'
+		// 'ngCookies': {
+		// 	deps: ['angular'],
+		// 	exports: 'ngCookies'
+		// },
+		'angularCookies':{
+			deps:['angular'],
+			exports:'angularCookies'
 		},
 	
 	    'jquery': {

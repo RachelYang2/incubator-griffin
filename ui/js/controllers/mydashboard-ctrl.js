@@ -25,7 +25,8 @@ define(['./module'], function(controllers) {
             $scope.$emit('initReq');
   
             var url_dashboard = $config.uri.getmydashboard + $scope.ntAccount;
-            $http.get(url_dashboard).success(function(res) {
+            $http.get(url_dashboard).then(function successCallback(res) {
+                res = res.data;
                 $scope.dashboard = res;
                 angular.forEach(res, function(sys) {
                     angular.forEach(sys.metrics, function(metric) {
@@ -68,7 +69,8 @@ define(['./module'], function(controllers) {
         /*click the chart to be bigger*/
         $scope.showBig = function(t){
             var metricDetailUrl = $config.uri.metricdetail + '/' + t.name;
-            $http.get(metricDetailUrl).success(function (data){
+            $http.get(metricDetailUrl).then(function successCallback(data){
+                data = data.data;
                 $rootScope.showBigChart($barkChart.getOptionBig(data));
             });
         }

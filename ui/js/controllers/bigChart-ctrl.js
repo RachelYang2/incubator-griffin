@@ -12,49 +12,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['./module'],
-function(controllers) {
+define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('BigChartCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope', '$location',
-    function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope, $location) {
+    controllers.controller('BigChartCtrl', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
 
         var echarts = require('echarts');
-
-        pageInit();
-
-        function pageInit() {
-            resizeBigChart();
-            $rootScope.bigChart = echarts.init($('#bigChartDiv').get(0), 'dark');
-        }
 
         function resizeBigChart() {
             document.getElementById('bigChartDiv').style.width = window.innerWidth + 'px';
             document.getElementById('bigChartDiv').style.height = window.innerHeight + 'px';
         }
 
-        $scope.closeBigChart = function() {
+        function pageInit() {
+            resizeBigChart();
+            $rootScope.bigChart = echarts.init($('#bigChartDiv').get(0), 'dark');
+        }
+
+        pageInit();
+
+        $scope.closeBigChart = function () {
             console.log('close big chart!');
             $location.path('/health');
-        }
+        };
 
-        $scope.downloadSample = function() {
+        $scope.downloadSample = function () {
             $rootScope.$broadcast('downloadSample', $scope.selectedModel);
-        }
+        };
 
-        $(window).resize(function() {
+        $(window).resize(function () {
             console.log('big chart resize');
             resizeBigChart();
             $rootScope.bigChart.resize();
         });
 
-        if ($rootScope.showBigChart == undefined) {
-            $rootScope.showBigChart = function(option) {
+        if ($rootScope.showBigChart === undefined) {
+            $rootScope.showBigChart = function (option) {
                 $scope.selectedModel = option.title.text;
                 $('#bigChartContainer').show();
                 $rootScope.bigChart.clear();
                 $rootScope.bigChart.setOption(option);
-            }
+            };
         }
-
     }]);
 });

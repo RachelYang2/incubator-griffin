@@ -15,88 +15,93 @@ limitations under the License.
 // Karma configuration
 // Generated on Thu Apr 07 2016 15:02:00 GMT+0800 (China Standard Time)
 //http://monicalent.com/blog/2015/02/11/karma-tests-angular-js-require-j/
-
 module.exports = function(config) {
-  config.set({
+    config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../../',
+        // base path that will be used to resolve all patterns (eg. files, exclude)
+        basePath: '../../',
 
+        // frameworks to use
+        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+        frameworks: ['jasmine', 'requirejs'],
 
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
+        // list of files / patterns to load in the browser
+        files: ['tests/ut/test-main.js',
+        // 'js/routes.js',
+        {
+            pattern: 'bower_components/**/*.js',
+            included: false
+        },
+        {
+            pattern: 'node_modules/angular-mocks/angular-mocks.js',
+            included: false
+        },
+        {
+            pattern: 'js/**/*.js',
+            included: false
+        },
+        {
+            pattern: 'js/routes.js',
+            included: false
+        },
+        {
+            pattern: 'tests/**/*spec.js',
+            included: false
+        }],
 
+        // list of files to exclude
+        exclude: ['js/main.js', 'js/bs.js',
+        // 'js/routes.js',
+        'bower_components/**/*test*/**/*.js', 'bower_components/**/*spec.js',
 
-    files: [
-      'tests/ut/test-main.js',
-      {pattern:'bower_components/**/*.js', included:false},
-      {pattern:'node_modules/angular-mocks/angular-mocks.js', included:false},
-      {pattern: 'js/**/*.js', included: false},
-      {pattern: 'tests/**/*spec.js', included: false}
-    ],
+        // 'node_modules/**/*spec.js',
+        // 'node_modules/**/*spec*/**/*.js',
+        // 'node_modules/**/*test.js'
+        ],
 
+        // preprocess matching files before serving them to the browser
+        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+        preprocessors: {
+            'js/**/*.js': ['coverage']
+        },
 
-    // list of files to exclude
-    exclude: [
-      'js/main.js',
-      'js/bs.js',
-      'js/routes.js',
-      'bower_components/**/*test*/**/*.js',
-      'bower_components/**/*spec.js',
-      // 'node_modules/**/*spec.js',
-      // 'node_modules/**/*spec*/**/*.js',
-      // 'node_modules/**/*test.js'
-    ],
+        coverageReporter: {
+            type: 'lcov',
+            dir: 'tests/ut/test-coverage'
+        },
 
+        // test results reporter to use
+        // possible values: 'dots', 'progress'
+        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+        // reporters: ['progress'],
+        reporters: ['mocha', 'coverage', 'progress'],
 
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      'js/**/*.js':['coverage']
-    },
+        // web server port
+        port: 9876,
 
-    coverageReporter: {
-        type:'lcov',
-        dir: 'tests/ut/test-coverage'
-    },
+        // enable / disable colors in the output (reporters and logs)
+        colors: true,
 
+        // level of logging
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        logLevel: config.LOG_DEBUG,
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    // reporters: ['progress'],
-    reporters: ['mocha', 'coverage', 'progress'],
+        // enable / disable watching file and executing tests whenever any file changes
+        autoWatch: true,
 
+        // start these browsers
+        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+        browsers: ['Chrome'],
+        // client: {
+        //   requireJsShowNoTimestampsError: false
+        // },
 
-    // web server port
-    port: 9876,
+        // Continuous Integration mode
+        // if true, Karma captures browsers, runs the tests and exits
+        singleRun: false,
 
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
-
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
-
-
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
-
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
+        // Concurrency level
+        // how many browser should be started simultaneous
+        concurrency: Infinity
+    })
 }

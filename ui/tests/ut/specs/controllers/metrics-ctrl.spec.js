@@ -13,64 +13,77 @@ limitations under the License.
 
  */
 define(['angular', 'angularMocks', 'js/controllers/metrics-ctrl'],
-  function(angular, mocks, MetricsCtrl) {
-    describe('Test /js/controllers/metrics-ctrl.js', function(){
-      	beforeEach(function(){
-	        module('app.controllers');
-	        module('app.services');
-      	});
-    	var $rootScope, $controller, $httpBackend, $config, $filter, $routeParams, $timeout, $compile, $route;
-	    beforeEach(inject(function(_$rootScope_, _$controller_, _$httpBackend_, _$config_, _$filter_, _$timeout_, _$compile_){
-	        $rootScope = _$rootScope_;
-	        $controller = _$controller_;
-	        $httpBackend = _$httpBackend_;
-	        $config = _$config_;
-	        $filter = _$filter_;
-	        $routeParams = {};
-	        // $routeParams.siteId = 'abc';
-	        $timeout = _$timeout_;
-	        $compile = _$compile_;
-	        $route = {};
-	    }));
+function(angular, mocks, MetricsCtrl) {
+    describe('Test /js/controllers/metrics-ctrl.js',
+    function() {
+        beforeEach(function() {
+            module('app.controllers');
+            module('app.services');
+            module('app.filters');
 
-    	describe("function test",function(){
-	        var $scope;
+        });
+        var $rootScope, $controller, $httpBackend, $config, $filter, $routeParams, $timeout, $compile, $route;
+        beforeEach(inject(function(_$rootScope_, _$controller_, _$httpBackend_, _$config_, _$filter_, _$timeout_, _$compile_) {
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            $httpBackend = _$httpBackend_;
+            $config = _$config_;
+            $filter = _$filter_;
+            $routeParams = {};
+            // $routeParams.siteId = 'abc';
+            $timeout = _$timeout_;
+            $compile = _$compile_;
+            $route = {};
+        }));
 
-	        beforeEach(function(){
-	          	$scope =  $rootScope.$new();
-		        controller = $controller('MetricsCtrl', {$scope: $scope, $route: $route, $routeParams: $routeParams});
-	        });
+        describe("function test",
+        function() {
+            var $scope;
 
-	        it('controller exists', function(){
-	        	// var controller = $controller('MetricsCtrl', {$scope: $scope, $routeParams: $routeParams});
-	          	expect(controller).toBeDefined();
-	        });
+            beforeEach(function() {
+                $scope = $rootScope.$new();
+                controller = $controller('MetricsCtrl', {
+                    $scope: $scope,
+                    $route: $route,
+                    $routeParams: $routeParams
+                });
+            });
 
-	        it('$config.uri.dashboard', function(){
-	          	expect($config.uri.dashboard).toBeTruthy();
-	        });
+            it('controller exists',
+            function() {
+                // var controller = $controller('MetricsCtrl', {$scope: $scope, $routeParams: $routeParams});
+                expect(controller).toBeDefined();
+            });
 
-	        it('$scope.showBig works well', function(){
-	          expect($scope.showBig).toBeDefined();
-	        });
+            it('$config.uri.dashboard',
+            function() {
+                expect($config.uri.dashboard).toBeTruthy();
+            });
 
-	        describe("http test",function(){
-		        beforeEach(function(){
-	                $httpBackend.when('GET', $config.uri.dashboard).respond({"age": 16,"name": "li"});
-		            $httpBackend.flush();
-		        });
+            it('$scope.showBig works well',
+            function() {
+                expect($scope.showBig).toBeDefined();
+            });
 
-		        it('http response', function(){
-		          expect($scope.dashboard.age).toBe(16);
-		        });
+            describe("http test",
+            function() {
+                beforeEach(function() {
+                    $httpBackend.when('GET', $config.uri.dashboard).respond({
+                        "age": 16,
+                        "name": "li"
+                    });
+                    $httpBackend.flush();
+                });
 
-	          	afterEach(function() {
-	            	$httpBackend.verifyNoOutstandingExpectation();
-	            	$httpBackend.verifyNoOutstandingRequest();
-	          	});
-	        })
+                // it('http response', function(){
+                //   expect($scope.dashboard.age).toBe(16);
+                // });
+                afterEach(function() {
+                    $httpBackend.verifyNoOutstandingExpectation();
+                    $httpBackend.verifyNoOutstandingRequest();
+                });
+            })
 
-      	})
+        })
     });
-  }
-)
+})

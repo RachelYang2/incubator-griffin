@@ -12,36 +12,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['angular', 'angularMocks', 'js/controllers/nav-ctrl'],
-  function(angular, mocks, navCtrl) {
-    describe('Test /js/controllers/nav-ctrl.js', function(){
-      beforeEach(function(){
-        module('app.controllers');
-        module('app.services');
-      });
-    	var $controller, $config, $httpBackend, $location;
-
-    	beforeEach(inject(function(_$controller_, _$config_, _$httpBackend_, _$location_){
-    	    $controller = _$controller_;
-    	    $config = _$config_;
-    	    $httpBackend = _$httpBackend_;
-          $location = _$location_;
-    	}));
-
-      describe('$scope functions are set properly', function(){
-        var $scope;
-
-        beforeEach(function(){
-          $scope = {};
-          $controller('NavCtrl', {$scope:$scope});
-        })
-
-        it('$scope.isActive is defined correctly', function(){
-          $location.path('/home');
-          expect($scope.isActive('/home')).toBeTruthy();
+define(['angular', 'angularMocks', 'angularCookies', 'js/controllers/nav-ctrl'],
+function(angular, mocks, navCtrl) {
+    describe('Test /js/controllers/nav-ctrl.js',
+    function() {
+        beforeEach(function() {
+            module('app.controllers');
+            module('app.services');
+            module('app.filters');
+            module('ngCookies');
         });
+        // beforeEach(angular.mock.module('app',['ngCookies']));
+        var $scope, $controller, $config, $httpBackend, $location, $rootScope, $cookies;
 
-      });
+        beforeEach(inject(function(_$controller_, _$config_, _$httpBackend_, _$location_, _$rootScope_, _$cookies_) {
+            $controller = _$controller_;
+            $config = _$config_;
+            $httpBackend = _$httpBackend_;
+            $location = _$location_;
+            $rootScope = _$rootScope_;
+            $cookies = _$cookies_;
+        }));
+
+        describe('$scope functions are set properly',
+        function() {
+            // var $scope;
+            beforeEach(function() {
+                $scope = $rootScope.$new();
+                $controller('NavCtrl', {
+                    $scope: $scope,
+                    $cookies: $cookies
+                });
+            })
+
+            it('$scope.isActive is defined correctly',
+            function() {
+                expect($scope).toBeDefined();
+                $location.path('/home');
+                expect($scope.isActive('/home')).toBeTruthy();
+            });
+
+        });
     });
-  }
-);
+});

@@ -64,7 +64,6 @@ define(['./module'], function (services) {
         }],
         color: ['#005732','#ff3333','#c23531']
     };
-
     return option;
   }
 

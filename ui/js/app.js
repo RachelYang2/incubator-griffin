@@ -22,10 +22,13 @@ define([
     'ngSmartTable',
     'angularRoute',
     'ngToaster',
-    'ngCookies',
+    // 'ngCookies',
+    'angularCookies',
     'angularSpinner',
+    // 'ngSpinner',
     'echarts',
-    'echarts-dark'
+    // 'echarts-dark',
+    // 'spin'
 ], function (angular) {
     'use strict';
 
@@ -38,6 +41,8 @@ define([
         'ngRoute',
         'toaster',
         'ngCookies',
-        'angularSpinner'
+        'angularSpinner',
+        // 'echarts-dark',
+        // 'spin'
     ]);
 });

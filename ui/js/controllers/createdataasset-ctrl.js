@@ -13,11 +13,9 @@ limitations under the License.
 
  */
 
-define(['./module'],
-function(controllers) {
+define(['./module'], function (controllers) {
     'use strict';
-    controllers.controller('CreateDataAssetCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter',
-    function($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {
+    controllers.controller('CreateDataAssetCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$route', '$filter', function ($scope, $http, $config, $location, toaster, $route, $filter) {
         $scope.currentStep = 1;
         $scope.assetTypeOptions = ['hivetable'];
         $scope.formatTypeOptions = ['yyyyMMdd', 'yyyy-MM-dd', 'HH'];
@@ -30,13 +28,13 @@ function(controllers) {
         });
 
         $scope.systemOptions = $filter('strarr')('modelsystem'); //['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
-        $scope.updateHdfsPath = function(typeIndex) {
-            if (typeIndex != 0) {
+        $scope.updateHdfsPath = function (typeIndex) {
+            if (typeIndex !== 0) {
                 $scope.form.basic.path = '';
             }
         };
 
-        $scope.addSchema = function() {
+        $scope.addSchema = function () {
             $scope.form.basic.schema.push({
                 name: '',
                 type: 'string',
@@ -45,33 +43,20 @@ function(controllers) {
             });
         };
 
-        $scope.addPatitionColumn = function() {
+        $scope.addPatitionColumn = function () {
             $scope.form.basic.partitions.push({
                 name: '',
                 format: "yyyyMMdd"
             });
         };
 
-        $scope.deleteSchema = function(index) {
+        $scope.deleteSchema = function (index) {
             $scope.form.basic.schema.splice(index, 1);
         };
 
-        $scope.deletePartition = function(index) {
+        $scope.deletePartition = function (index) {
             $scope.form.basic.partitions.splice(index, 1);
         };
-
-        $scope.$on('$viewContentLoaded',
-        function() {
-            $scope.$emit('initReq');
-            resizeWindow();
-        });
-
-        $scope.$on('resizeHandler',
-        function(e) {
-            if ($route.current.$$route.controller == "CreateDataAssetCtrl") {
-                resizeWindow();
-            }
-        });
 
         function resizeWindow() {
             $('.formStep').height(window.innerHeight - $('.formStep').offset().top - $('#footerwrap').outerHeight() - 20);
@@ -80,6 +65,26 @@ function(controllers) {
                 'max-height': $('fieldset').height()
             });
         }
+
+        $scope.$on('$viewContentLoaded', function () {
+            $scope.$emit('initReq');
+            resizeWindow();
+        });
+
+        $scope.$on('resizeHandler', function () {
+            if ($route.current.$$route.controller === "CreateDataAssetCtrl") {
+                resizeWindow();
+            }
+        });
+
+        var errorMessage = function (i, msg) {
+            var errorMsgs = ['Please input valid values'];
+            if (!msg) {
+                toaster.pop('error', 'Error', errorMsgs[i - 1], 0);
+            } else {
+                toaster.pop('error', 'Error', msg, 0);
+            }
+        };
 
         // Initial Value
         $scope.form = {
@@ -93,12 +98,11 @@ function(controllers) {
                 }],
                 partitions: []
             },
-            submit: function(form) {
+            submit: function (form) {
                 if (!form.$valid) {
-                    var field = null,
-                    firstError = null;
+                    var field = null, firstError = null;
                     for (field in form) {
-                        if (field[0] != '$') {
+                        if (field[0] !== '$') {
                             if (firstError === null && !form[field].$valid) {
                                 firstError = form[field].$name;
                             }
@@ -115,48 +119,39 @@ function(controllers) {
                     this.data = {
                         basic: this.basic
                     };
-                    this.data.basic.path += this.data.basic.path.substring(this.data.basic.path.length - 1) == "/" ? '': '/';
+                    this.data.basic.path += this.data.basic.path.substring(this.data.basic.path.length - 1) === "/"
+                        ? ''
+                        : '/';
                     $('#confirm-pu').modal('show');
                 }
             },
 
-            save: function() {
+            save: function () {
                 var msg = {
-                    'system': $scope.systemOptions[$scope.form.basic.system],
-                    'assetType': $scope.assetTypeOptions[$scope.form.basic.type],
-                    'assetName': $scope.form.basic.assetName,
-                    'assetHDFSPath': $scope.form.data.basic.path + ($scope.form.data.basic.folderFormat == undefined ? "": $scope.form.data.basic.folderFormat),
-                    'platform': $scope.form.basic.platform,
-                    'schema': $scope.form.basic.schema,
-                    'partitions': $scope.form.basic.partitions,
-                    'owner': $scope.form.basic.owner
-                }
+                    system: $scope.systemOptions[$scope.form.basic.system],
+                    assetType: $scope.assetTypeOptions[$scope.form.basic.type],
+                    assetName: $scope.form.basic.assetName,
+                    assetHDFSPath: $scope.form.data.basic.path + ($scope.form.data.basic.folderFormat === undefined
+                        ? ""
+                        : $scope.form.data.basic.folderFormat),
+                    platform: $scope.form.basic.platform,
+                    schema: $scope.form.basic.schema,
+                    partitions: $scope.form.basic.partitions,
+                    owner: $scope.form.basic.owner
+                };
 
                 $http.post($config.uri.adddataasset, msg).then(function successCallback() {
-                    $('#confirm-pu').on('hidden.bs.modal',
-                    function(e) {
+                    $('#confirm-pu').on('hidden.bs.modal', function () {
                         $('#confirm-pu').off('hidden.bs.modal');
                         $location.path('/dataassets');
                         $scope.$apply();
                     });
-
                     $('#confirm-pu').modal('hide');
-
-                },
-                function errorCallback(response) {
+                }, function errorCallback(response) {
                     toaster.pop('error', 'Error when creating dataasset', response.message);
                 });
-            },
-
-        };
-
-        var errorMessage = function(i, msg) {
-            var errorMsgs = ['Please input valid values'];
-            if (!msg) {
-                toaster.pop('error', 'Error', errorMsgs[i - 1], 0);
-            } else {
-                toaster.pop('error', 'Error', msg, 0);
             }
         };
+
     }]);
 });

@@ -33,9 +33,6 @@ define(['./module'], function (controllers) {
             if(start == 0 && !$scope.rowCollection){
                 $http.get(allModels).then(function successCallback(data) {
                     if(data.data){
-                  // data.sort(function(a,b){
-                  //   return -(a.timestamp - b.timestamp);
-                  // });
                     }
                     originalRowCollection = new Array();
                     angular.forEach(data.data,function(db){

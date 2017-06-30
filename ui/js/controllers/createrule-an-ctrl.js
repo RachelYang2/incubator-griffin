@@ -13,16 +13,19 @@ limitations under the License.
 
  */
 
-define(['./module'], function(controllers) {
+define(['./module'],
+function(controllers) {
     'use strict';
-    controllers.controller('CreateRuleANCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter', function($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {
+    controllers.controller('CreateRuleANCtrl', ['$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$route', '$filter',
+    function($scope, $http, $config, $location, toaster, $timeout, $route, $filter) {
         console.log('CreateRuleANCtrl');
         $scope.currentStep = 1;
 
         var dbtreeUrl = $config.uri.dbtree;
         var schemaDefinitionUrl = $config.uri.schemadefinition;
 
-        $http.get(dbtreeUrl).success(function(data) {
+        $http.get(dbtreeUrl).then(function successCallback(data) {
+            data = data.data;
             var dbList = [];
             if (data && data.length > 0) {
                 data.forEach(function(db) {
@@ -42,10 +45,9 @@ define(['./module'], function(controllers) {
                             dbNode.children.push(dsNode);
                             dsNode.parent = db;
 
-
                             if (system.assets && system.assets.length > 0) {
-                                system.assets.sort(function(a, b){
-                                  return (a.name<b.name?-1:(a.name>b.name?1:0));
+                                system.assets.sort(function(a, b) {
+                                    return (a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
                                 });
                                 system.assets.forEach(function(schema) {
                                     var schemaNode = {
@@ -65,72 +67,54 @@ define(['./module'], function(controllers) {
             $scope.dbList = dbList;
         });
 
-
         //trigger after select schema for src
-        $scope.$watch('currentNode', function(newValue) {
+        $scope.$watch('currentNode',
+        function(newValue) {
             // $scope.schemaCollection = null;
             if (newValue && newValue.l3) {
-
                 var sysName = newValue.parent.name;
                 $scope.form.basic.system = $filter('stridx')(sysName, 'modelsystem') + '';
-
                 //retrieve the schema definition and display the table
-                $http.get(schemaDefinitionUrl + '/' + newValue.id).success(function(data) {
-                    $scope.schemaCollection = data.schema;
+                $http.get(schemaDefinitionUrl + '/' + newValue.id).then(function successCallback(data) {
+                    $scope.schemaCollection = data.data.schema;
                 });
             }
         });
 
-
-
-
-        $scope.$on('$viewContentLoaded', function() {
+        $scope.$on('$viewContentLoaded',
+        function() {
             $scope.$emit('initReq');
             resizeWindow();
         });
 
-        $scope.$on('resizeHandler', function(e) {
+        $scope.$on('resizeHandler',
+        function(e) {
             if ($route.current.$$route.controller == "CreateRuleANCtrl") {
                 $scope.$emit('initReq');
                 resizeWindow();
             }
         });
 
-
         function resizeWindow() {
-                    var stepSelection = '.formStep[id=step-' + $scope.currentStep + ']';
-                    $(stepSelection).css({
-                        height: window.innerHeight - $(stepSelection).offset().top - $('#footerwrap').outerHeight()
-                    });
-                    $('fieldset').height($(stepSelection).height() - $(stepSelection + '>.stepDesc').height() - $('.btn-container').height() - 80);
-                    $('.y-scrollable').css({
-                        'max-height': $('fieldset').height() - $('.add-dataset').outerHeight()
-                    });
-                    //error message box position
-                    $('.formula-text-mid').css({
-                        'padding-top': (($('.formula-text-up').height() - $('.formula-text-mid').height()) + $('.formula-text-mid').height() / 2) + 'px'
-                    });
+            var stepSelection = '.formStep[id=step-' + $scope.currentStep + ']';
+            $(stepSelection).css({
+                height: window.innerHeight - $(stepSelection).offset().top - $('#footerwrap').outerHeight()
+            });
+            $('fieldset').height($(stepSelection).height() - $(stepSelection + '>.stepDesc').height() - $('.btn-container').height() - 80);
+            $('.y-scrollable').css({
+                'max-height': $('fieldset').height() - $('.add-dataset').outerHeight()
+            });
+            //error message box position
+            $('.formula-text-mid').css({
+                'padding-top': (($('.formula-text-up').height() - $('.formula-text-mid').height()) + $('.formula-text-mid').height() / 2) + 'px'
+            });
 
         }
 
-        $scope.ruleTypes = $filter('strarr')('modeltype');//['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics'];
-        $scope.scheduleTypes = $filter('strarr')('scheduletype');//['Daily', 'Weekly', 'Monthly', 'Hourly'];
-        $scope.ruleSystems = $filter('strarr')('modelsystem');//['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
+        $scope.ruleTypes = $filter('strarr')('modeltype'); //['Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics'];
+        $scope.scheduleTypes = $filter('strarr')('scheduletype'); //['Daily', 'Weekly', 'Monthly', 'Hourly'];
+        $scope.ruleSystems = $filter('strarr')('modelsystem'); //['Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
         $scope.anTypes = ['', 'History Trend Detection', 'Bollinger Bands Detection', 'Deviation Detection'];
-        // $scope.ruleType = function(index){
-        //   var types = ['', 'Accuracy', 'Validity', 'Anomaly Detection', 'Publish Metrics'];
-        //   return types[index];
-        // }
-
-        // $scope.scheduleType = function(index){
-        //   var types = ['', 'Daily', 'Weekly', 'Monthly', 'Hourly'];
-        //   return types[index];
-        // }
-        //
-        // $scope.ruleSystem = function(index){
-        //   var sys = ['', 'Bullseye', 'GPS', 'Hadoop', 'PDS', 'IDLS', 'Pulsar', 'Kafka'];
-        //   return sys[index];
-        // }
 
         // Initial Value
         $scope.form = {
@@ -141,11 +125,11 @@ define(['./module'], function(controllers) {
                     // form.$setPristine();
                     nextStep();
                 } else {
-                    var field = null
-                      , firstError = null ;
+                    var field = null,
+                    firstError = null;
                     for (field in form) {
                         if (field[0] != '$') {
-                            if (firstError === null  && !form[field].$valid) {
+                            if (firstError === null && !form[field].$valid) {
                                 firstError = form[field].$name;
                             }
 
@@ -171,8 +155,8 @@ define(['./module'], function(controllers) {
                 } else {
                     if (formValidation()) {
                         //   $scope.toTheTop();
-                        if(i - parseInt($scope.currentStep) == 1){
-                          goToStep(i);
+                        if (i - parseInt($scope.currentStep) == 1) {
+                            goToStep(i);
                         }
 
                     } else {
@@ -182,11 +166,11 @@ define(['./module'], function(controllers) {
             },
             submit: function(form) {
                 if (!form.$valid) {
-                    var field = null
-                      , firstError = null ;
+                    var field = null,
+                    firstError = null;
                     for (field in form) {
                         if (field[0] != '$') {
-                            if (firstError === null  && !form[field].$valid) {
+                            if (firstError === null && !form[field].$valid) {
                                 firstError = form[field].$name;
                             }
 
@@ -199,19 +183,18 @@ define(['./module'], function(controllers) {
                     errorMessage($scope.currentStep);
                 } else {
                     form.$setPristine();
-                    this.data={
-                      basic: this.basic,
-                      extra: {
-                        srcDb: $scope.currentNode.parent.parent.platform,
-                        srcDataSet: $scope.currentNode.parent.name,
-                        anType: this.anType
-                      }
+                    this.data = {
+                        basic: this.basic,
+                        extra: {
+                            srcDb: $scope.currentNode.parent.parent.platform,
+                            srcDataSet: $scope.currentNode.parent.name,
+                            anType: this.anType
+                        }
                     };
 
                     this.data.basic.dataaset = $scope.currentNode.name;
                     this.data.basic.dataasetId = $scope.currentNode.id;
                     // this.data.anType = this.anType;
-
                     $('#confirm-an').modal('show');
                 }
             },
@@ -222,50 +205,45 @@ define(['./module'], function(controllers) {
                 console.log(JSON.stringify($scope.form.data));
 
                 var newModel = $config.uri.newAnomalyModel;
-                $http.post(newModel, this.data).success(function(data) {
-                	// if(data.status=='0')
-                	// {
-	                  $('#confirm-an').on('hidden.bs.modal', function(e) {
-	                      $('#confirm-an').off('hidden.bs.modal');
-	                      $location.path('/rules');
-	                      $scope.$apply();
-	                  });
-	                	$('#confirm-an').modal('hide');
-                	// }
-                	// else
-                	// {
-                	// 	errorMessage(0, data.result);
-                	// }
-                }).error(function(data){
-                  // errorMessage(0, 'Save model failed, please try again!');
-                  toaster.pop('error', 'Save model failed, please try again!', data.message);
+                $http.post(newModel, this.data).then(function successCallback(data) {
+                    data = data.data;
+                    $('#confirm-an').on('hidden.bs.modal',
+                    function(e) {
+                        $('#confirm-an').off('hidden.bs.modal');
+                        $location.path('/rules');
+                        $scope.$apply();
+                    });
+                    $('#confirm-an').modal('hide');
+                },
+                function errorCallback(data) {
+                    toaster.pop('error', 'Save model failed, please try again!', data.message);
+
                 });
             },
 
         };
 
-
         var nextStep = function() {
             $scope.currentStep++;
-            $timeout(function(){
+            $timeout(function() {
                 resizeWindow();
-            }, 0);
-        }
-        ;
+            },
+            0);
+        };
         var prevStep = function() {
             $scope.currentStep--;
-            $timeout(function(){
+            $timeout(function() {
                 resizeWindow();
-            }, 0);
-        }
-        ;
+            },
+            0);
+        };
         var goToStep = function(i) {
             $scope.currentStep = i;
-            $timeout(function(){
+            $timeout(function() {
                 resizeWindow();
-            }, 0);
-        }
-        ;
+            },
+            0);
+        };
 
         //validation only happens when going forward
         var formValidation = function(step) {
@@ -274,7 +252,7 @@ define(['./module'], function(controllers) {
                 step = $scope.currentStep;
             }
             if (step == 1) {
-                return $scope.currentNode?true:false;
+                return $scope.currentNode ? true: false;
             } else if (step == 2) {
                 return true;
             } else if (step == 3) {
@@ -286,14 +264,12 @@ define(['./module'], function(controllers) {
         }
 
         var errorMessage = function(i, msg) {
-            var errorMsgs = ['Please select one schema!','', 'please complete the form in this step before proceeding'];
+            var errorMsgs = ['Please select one schema!', '', 'please complete the form in this step before proceeding'];
             if (!msg) {
                 toaster.pop('error', 'Error', errorMsgs[i - 1], 0);
             } else {
                 toaster.pop('error', 'Error', msg, 0);
             }
-        }
-        ;
-    }
-    ]);
+        };
+    }]);
 });

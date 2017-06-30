@@ -12,51 +12,61 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['angular', 'angularMocks', 'js/controllers/createrule0-ctrl'],
-  function(angular, mocks, CreateRule0Ctrl) {
-    describe('Test /js/controllers/createrule0-ctrl.js', function(){
-      	beforeEach(function(){
-	        module('app.controllers');
-	        module('app.services');
-      	});
-    	var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout;
+define(['angular', 'angularMocks', 'angularRoute', 'js/controllers/createrule0-ctrl'],
+function(angular, mocks, CreateRule0Ctrl) {
+    describe('Test /js/controllers/createrule0-ctrl.js',
+    function() {
+        beforeEach(function() {
+            module('app.controllers');
+            module('app.services');
+            module('app.filters');
+            module('ngRoute');
+        });
+        var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout, $route;
 
-	    beforeEach(inject(function(_$rootScope_ , _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_){
-	    	$rootScope = _$rootScope_;
-	    	$controller = _$controller_;
-	        $httpBackend = _$httpBackend_;
-	        $config = _$config_;
-	        $location = _$location_;
-	        $timeout = _$timeout_;
-	        toaster = {};
-	    }));
+        beforeEach(inject(function(_$rootScope_, _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_, _$route_) {
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            $httpBackend = _$httpBackend_;
+            $config = _$config_;
+            $location = _$location_;
+            $timeout = _$timeout_;
+            toaster = {};
+            $route = _$route_;
+        }));
 
-        beforeEach(function(){
-          	$scope =  $rootScope.$new();
-	        controller = $controller('CreateRule0Ctrl', {$scope: $scope, toaster: toaster });
+        beforeEach(function() {
+            $scope = $rootScope.$new();
+            controller = $controller('CreateRule0Ctrl', {
+                $scope: $scope,
+                toaster: toaster,
+                $route: $route
+            });
         });
 
-        describe("if the controller of CreateRule0Ctrl exists",function(){
-        	it('controller exists', function(){
-	          	expect(controller).toBeDefined();
-	        });
+        describe("if the controller of CreateRule0Ctrl exists",
+        function() {
+            it('controller exists',
+            function() {
+                expect(controller).toBeDefined();
+            });
         })
 
-        describe("if the $scope.click exists",function(){
+        describe("if the $scope.click exists",
+        function() {
 
-        	it('$scope.click', function(){
-	          	expect($scope.click).toBeDefined();
-	        });
+            it('$scope.click',
+            function() {
+                expect($scope.click).toBeDefined();
+            });
 
-	        it('should change location when setting it via click function', inject(function() {
-		        var url = '/index';
-		        $scope.click(url);
-		        spyOn($location, 'path').and.returnValue(url);
-		    }));
+            it('should change location when setting it via click function', inject(function() {
+                var url = '/index';
+                $scope.click(url);
+                spyOn($location, 'path').and.returnValue(url);
+            }));
 
         })
-
 
     });
-  }
-)
+})

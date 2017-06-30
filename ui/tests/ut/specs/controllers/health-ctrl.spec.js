@@ -12,62 +12,102 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  */
-define(['require', 'angular', 'angularMocks', 'js/controllers/health-ctrl', 'echarts'],
-  function(require, angular, mocks, HealthCtrl) {
-    describe('Test /js/controllers/health-ctrl.js', function(){
-      	beforeEach(function(){
-	        module('app.controllers');
-	        module('app.services');
-      	});
-    	var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout, $route;
+define(['require', 'angular', 'angularMocks', 'js/controllers/health-ctrl', 'echarts', 'js/services/bark-chart'],
+function(require, angular, mocks, HealthCtrl) {
+    describe('Test /js/controllers/health-ctrl.js',
+    function() {
+        beforeEach(function() {
+            module('app.controllers');
+            module('app.services');
+            module('app.filters');
+        });
+        var $scope, $rootScope, $controller, $httpBackend, $config, $location, toaster, $timeout, $route, $barkChart;
 
-	    beforeEach(inject(function(_$rootScope_ , _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_){
-	    	$rootScope = _$rootScope_;
-	    	$controller = _$controller_;
-	        $httpBackend = _$httpBackend_;
-	        $config = _$config_;
-	        $location = _$location_;
-	        $timeout = _$timeout_;
-	        toaster = {};
-	        $route = {};
-	    }));
+        beforeEach(inject(function(_$rootScope_, _$controller_, _$httpBackend_, _$config_, _$location_, _$timeout_, _$barkChart_) {
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            $httpBackend = _$httpBackend_;
+            $config = _$config_;
+            $location = _$location_;
+            $timeout = _$timeout_;
+            toaster = {};
+            $route = {};
+            $barkChart = _$barkChart_;
+        }));
 
-        beforeEach(function(){
-          	$scope =  $rootScope.$new();
-	        controller = $controller('HealthCtrl', {$scope: $scope, $route: $route, toaster: toaster });
+        beforeEach(function() {
+            $scope = $rootScope.$new();
+            controller = $controller('HealthCtrl', {
+                $scope: $scope,
+                $route: $route,
+                toaster: toaster,
+                $barkChart: $barkChart
+            });
         });
 
-        describe("if the controller of HealthCtrl exists",function(){
-        	it('controller exists', function(){
-	          	expect(controller).toBeDefined();
-	        });
+        describe("if the controller of HealthCtrl exists",
+        function() {
+            it('controller exists',
+            function() {
+                expect(controller).toBeDefined();
+            });
         })
 
-        describe("check if parameters are available",function(){
+        describe("check if parameters are available",
+        function() {
 
-	        it('$scope.value and $config.value should be right', function(){
-	          	expect($config.uri.heatmap).toBeTruthy();
-	        });
+            it('$scope.value and $config.value should be right',
+            function() {
+                expect($config.uri.dashboard).toBeTruthy();
+            });
 
-      	})
+        })
 
-      	describe("httpGet $config.uri.dbtree test",function(){
-	        beforeEach(function(){
-	            $httpBackend.when('GET', $config.uri.heatmap).respond([{"name":"unknown","dq":0.0,"metrics":[{"name":"mean","dq":4835.3,"dqfail":0,"timestamp":1470387389994,"metricType":"","assetName":null,"details":[]},{"name":"test1001","dq":1638.6,"dqfail":0,"timestamp":1470387312289,"metricType":"","assetName":null,"details":[]},{"name":"test_publish","dq":99.8,"dqfail":0,"timestamp":1463994766925,"metricType":"","assetName":null,"details":[]},{"name":"v","dq":99.8,"dqfail":0,"timestamp":1463994766925,"metricType":"","assetName":null,"details":[]}]},{"name":"Hadoop","dq":0.0,"metrics":[{"name":"movie_acc","dq":97.0,"dqfail":0,"timestamp":1470009600000,"metricType":"","assetName":null,"details":[]},{"name":"movie_acc_test2","dq":97.0,"dqfail":0,"timestamp":1470009600000,"metricType":"","assetName":null,"details":[]},{"name":"hadoop_accuracy_1","dq":99.053,"dqfail":0,"timestamp":1467356400000,"metricType":"","assetName":null,"details":[]}]},{"name":"Bullseye","dq":0.0,"metrics":[{"name":"test_accuracy_1","dq":98.952,"dqfail":1,"timestamp":1467439200000,"metricType":"","assetName":null,"details":[]},{"name":"test_accuracy_2","dq":99.103,"dqfail":0,"timestamp":1467439200000,"metricType":"","assetName":null,"details":[]},{"name":"TotalCount_asset1","dq":5056215.0,"dqfail":0,"timestamp":1467439200000,"metricType":"","assetName":null,"details":[]},{"name":"TotalCount_asset2","dq":1.229703E7,"dqfail":0,"timestamp":1467356400000,"metricType":"","assetName":null,"details":[]},{"name":"aw","dq":5056215.0,"dqfail":0,"timestamp":1467439200000,"metricType":"Bollinger","assetName":null,"details":[]}]}]);
-	            $httpBackend.flush();
-	        });
+        describe("httpGet $config.uri.dashboard test",
+        function() {
+            beforeEach(function() {
+                $httpBackend.when('POST', $config.uri.dashboard).respond({
+                    "hits": {
+                        "hits": [{
+                            "_source": {
+                                "name": "buy_hourly",
+                                "tmst": 1493951823461,
+                                "total": 23224,
+                                "matched": 23028
+                            }
+                        },
+                        {
+                            "_source": {
+                                "name": "search_hourly",
+                                "tmst": 1493951823461,
+                                "total": 1067347,
+                                "matched": 1067346
+                            }
+                        },
+                        ]
+                    }
+                });
+                $httpBackend.when('GET', $config.uri.organization).respond({
+                    "griffin": ["buy_hourly"]
+                });
+                $httpBackend.flush();
 
-	        it('http response', function(){
-	          // expect($scope.dbList).toBeTruthy();
-	        });
+            });
 
-	      	afterEach(function() {
-	        	$httpBackend.verifyNoOutstandingExpectation();
-	        	$httpBackend.verifyNoOutstandingRequest();
-	      	});
-	    })
+            it('http response',
+            function() {
 
+                // $scope.$on('$viewContentLoaded',function(){
+                //   		$scope.pageInit();
+                //   		$httpBackend.flush();
+                // });
+            });
+
+            afterEach(function() {
+                // $httpBackend.verifyNoOutstandingExpectation();
+                // $httpBackend.verifyNoOutstandingRequest();
+            });
+        })
 
     });
-  }
-)
+})

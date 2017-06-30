@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js\controllers\viewrule-ctrl.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">js/controllers/</a> viewrule-ctrl.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">35.14% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>13/37</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">36.11% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>13/36</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*-
+ * Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+&nbsp;
+     http://www.apache.org/licenses/LICENSE-2.0
+&nbsp;
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+&nbsp;
+ */
+&nbsp;
+define(['./module'], function (controllers) {
+    'use strict';
+    controllers.controller('ViewRuleCtrl', ['$filter', '$scope', '$http', '$config', '$location', 'toaster', '$timeout', '$routeParams', '$barkChart', '$route',  function ($filter, $scope, $http, $config, $location, toaster, $timeout, $routeParams, $barkChart, $route) {
+&nbsp;
+        var echarts = require('echarts');
+  
+        pageInit();
+&nbsp;
+        function pageInit() {
+        $scope.$emit('initReq');
+&nbsp;
+        var getModelUrl = $config.uri.getModel+"/"+$routeParams.modelname;
+        console.log(getModelUrl);
+        $http.get(getModelUrl).then(<span class="fstat-no" title="function not covered" >function successCallback(data){</span>
+<span class="cstat-no" title="statement not covered" >            $scope.ruleData = data.data;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.sourceLength = $scope.ruleData.evaluateRule.rules.split('AND').length;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.sourceDB = $scope.ruleData.source.config.database;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.targetDB = $scope.ruleData.target.config.database;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.sourceTable = $scope.ruleData.source.config["table.name"];</span>
+<span class="cstat-no" title="statement not covered" >            $scope.targetTable = $scope.ruleData.target.config["table.name"];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $scope.getNumber = <span class="fstat-no" title="function not covered" >function(n){<span class="cstat-no" title="statement not covered" ></span>return new Array(n);}</span></span>
+        },<span class="fstat-no" title="function not covered" >function errorCallback(response) {</span>
+<span class="cstat-no" title="statement not covered" >            toaster.pop('error', 'Error when deleting record', response.message);</span>
+        });
+&nbsp;
+        $scope.anTypes = ['', 'History Trend Detection', 'Bollinger Bands Detection', 'Deviation Detection'];
+      }
+&nbsp;
+      $scope.confirmDeploy = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >          var deployModelUrl = $config.uri.enableModel + '/' + $scope.ruleData.basic.name;</span>
+<span class="cstat-no" title="statement not covered" >          var answer = confirm('Are you sure you want to deploy this model to production?')</span>
+  
+<span class="cstat-no" title="statement not covered" >          if(answer){</span>
+<span class="cstat-no" title="statement not covered" >              $http.get(deployModelUrl).then(<span class="fstat-no" title="function not covered" >function successCallback(){</span></span>
+<span class="cstat-no" title="statement not covered" >                  $scope.ruleData.basic.status = 2;</span>
+<span class="cstat-no" title="statement not covered" >                  toaster.pop('info', 'Your model has been deployed to prduction!');</span>
+              });
+          }
+      }
+&nbsp;
+      $scope.$on('resizeHandler', <span class="fstat-no" title="function not covered" >function(e) {</span>
+<span class="cstat-no" title="statement not covered" >          if ($route.current.$$route.controller == "ViewRuleCtrl") {</span>
+<span class="cstat-no" title="statement not covered" >              resizeWindow();</span>
+          }
+      });
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function resizeWindow(){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          var h1 = $('#viewruleDefinition').height();</span>
+<span class="cstat-no" title="statement not covered" >          var h2 = $('#viewTestResult').height();</span>
+<span class="cstat-no" title="statement not covered" >          var height = Math.max(h1, h2);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          $('#viewruleDefinition').height(height);</span>
+<span class="cstat-no" title="statement not covered" >          $('#viewTestResult').height(height);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if ($scope.ruleChart) {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.ruleChart.resize();</span>
+          }
+      }
+    }]);
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jun 30 2017 17:23:18 GMT+0800 (China Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
