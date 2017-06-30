@@ -64,7 +64,7 @@ define(['./module'], function (controllers) {
 
         // Initial Value
         $scope.form = {
-            prev: function () {
+            prev: function (form) {
                 history.back();
             },
             submit: function (form) {
