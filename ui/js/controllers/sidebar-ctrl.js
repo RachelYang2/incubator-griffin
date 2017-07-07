@@ -1,25 +1,20 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+	Copyright (c) 2016 eBay Software Foundation.
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
+	    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 */
-
 define(['./module'], function(controllers) {
     'use strict';
-    controllers.controller('SideBarCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope','$location', function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope,$location) {
+    controllers.controller('SideBarCtrl', ['$scope', '$http', '$config', '$filter', '$timeout', '$compile', '$routeParams', '$barkChart', '$rootScope', function($scope, $http, $config, $filter, $timeout, $compile, $routeParams, $barkChart, $rootScope) {
 
         var echarts = require('echarts');
 
@@ -27,7 +22,7 @@ define(['./module'], function(controllers) {
 
         $scope.orgs = [];
         $scope.finalData = [];
-        $scope.metricData = [];
+        $scope.dataData = [];
 
         var renderDataAssetPie = function(status) {
             resizePieChart();
@@ -44,6 +39,11 @@ define(['./module'], function(controllers) {
 
         $scope.$watch(function(){return $routeParams.sysName;}, function(value){
           console.log('Watched value: ' + value);
+          if(value){
+            sideBarList(value);
+          }else{
+            $scope.briefmetrics = $scope.backup_metrics;
+          }
         });
 
         $scope.draw = function(metric, parentIndex, index) {
@@ -55,8 +55,8 @@ define(['./module'], function(controllers) {
             myChart.setOption(metric.myOption);
 
             $('#'+chartId).unbind('click');
-            $('#'+chartId).click(function(e) {
-              window.location.href = '/#!/detailed/'+$scope.finalData[parentIndex].metrics[index].name;
+            $('#'+chartId).click(function() {
+              showBig($scope.finalData[parentIndex].metrics[index]);
             });
 
         };
@@ -66,11 +66,10 @@ define(['./module'], function(controllers) {
         }
 
         function sideBarList(sysName){
-             var url_organization = $config.uri.organization;
-//            var url_organization = 'org.json';
-            $http.get(url_organization).then(function successCallback(res){
+            var url_organization = $config.uri.organization;
+            $http.get(url_organization).success(function(res){
                var orgNode = null;
-               angular.forEach(res.data, function(value,key) {
+               angular.forEach(res, function(value,key) {
                orgNode = new Object();
                $scope.orgs.push(orgNode);
                orgNode.name = key;
@@ -78,15 +77,15 @@ define(['./module'], function(controllers) {
                });
                $scope.originalOrg = angular.copy($scope.orgs);
                var url_briefmetrics = $config.uri.dashboard;
-                $http.post(url_briefmetrics, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
-//               $http.get('data.json').then(function successCallback(data){
-                   angular.forEach(data.data.hits.hits, function(sys) {
+               $http.get(url_briefmetrics, {cache:true}).success(function(data) {
+                   $scope.briefmetrics = data;
+                   angular.forEach(data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
                         return a.tmst - b.tmst;
                         }
-                   });
-               $scope.originalData = angular.copy(data.data);
+                });
+               $scope.originalData = angular.copy(data);
                $scope.myData = angular.copy($scope.originalData.hits.hits);
                $scope.metricName = [];
                for(var i = 0;i<$scope.myData.length;i++){
@@ -95,7 +94,7 @@ define(['./module'], function(controllers) {
                $scope.metricNameUnique = [];
                angular.forEach($scope.metricName,function(name){
                    if($scope.metricNameUnique.indexOf(name) === -1){
-                        $scope.metricData[$scope.metricNameUnique.length] = new Array();
+                        $scope.dataData[$scope.metricNameUnique.length] = new Array();
                         $scope.metricNameUnique.push(name);
                  }
                });
@@ -104,7 +103,7 @@ define(['./module'], function(controllers) {
             //push every point to its metric
                     for(var j = 0 ;j<$scope.metricNameUnique.length;j++){
                         if($scope.myData[i]._source.name==$scope.metricNameUnique[j]){
-                            $scope.metricData[j].push($scope.myData[i]);
+                            $scope.dataData[j].push($scope.myData[i]);
                         }
                     }
                 }
@@ -114,27 +113,26 @@ define(['./module'], function(controllers) {
                    node.name = sys.name;
                    node.dq = 0;
                    node.metrics = new Array();
-                   angular.forEach($scope.metricData,function(metric,index){
-                        if(sys.assetMap.indexOf(metric[metric.length-1]._source.name)!= -1){
+                   angular.forEach($scope.dataData,function(metric,index){
+                        if(sys.assetMap.indexOf(metric[0]._source.name)!= -1){
                             var metricNode = new Object();
-                            metricNode.name = metric[metric.length-1]._source.name;
-                            metricNode.timestamp = metric[metric.length-1]._source.tmst;
-                            metricNode.dq = metric[metric.length-1]._source.matched/metric[metric.length-1]._source.total*100;
+                            metricNode.name = metric[0]._source.name;
+                            metricNode.timestamp = metric[0]._source.tmst;
+                            metricNode.dq = metric[0]._source.matched/metric[0]._source.total*100;
                             metricNode.details = angular.copy(metric);
                             node.metrics.push(metricNode);
                         }
                    });
                    $scope.finalData.push(node);
+                })
+//            if(!sysName){
+//              $scope.backup_metrics = angular.copy(res);
+//            }
+                    $timeout(function() {
+                        resizeSideChart();
+                    }, 0);
                 });
-
-            if(!sysName){
-              $scope.backup_metrics = angular.copy($scope.finalData);
-            }
-            $timeout(function() {
-                resizeSideChart();
-            }, 0);
-           });
-          });
+            });
         }
 
         $(window).resize(function() {

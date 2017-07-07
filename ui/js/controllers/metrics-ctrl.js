@@ -1,22 +1,17 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+	Copyright (c) 2016 eBay Software Foundation.
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
+	    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 */
-
 define(['./module'], function(controllers) {
     'use strict';
     controllers.controller('MetricsCtrl', ['$scope', '$http', '$config', '$location', '$routeParams', '$timeout', '$compile', '$route', '$barkChart', '$rootScope',function($scope, $http, $config, $location, $routeParams, $timeout, $compile, $route, $barkChart, $rootScope) {
@@ -33,9 +28,8 @@ define(['./module'], function(controllers) {
           var url_dashboard = $config.uri.dashboard ;
           var url_organization = $config.uri.organization;
 
-          $http.get(url_organization).then(function successCallback(res){
+          $http.get(url_organization).success(function(res){
                var orgNode = null;
-               res = res.data;
                angular.forEach(res, function(value,key) {
                     orgNode = new Object();
                     $scope.orgs.push(orgNode);
@@ -43,9 +37,9 @@ define(['./module'], function(controllers) {
                     orgNode.assetMap = value;
                });
                $scope.originalOrgs = angular.copy($scope.orgs);
-//               $http.get(url_dashboard).then(function successCallback(data){
-                $http.post(url_dashboard, {"query": {"match_all":{}},  "sort": [{"tmst": {"order": "asc"}}],"size":1000}).then(function successCallback(data) {
-                    data = data.data;
+               var url_briefmetrics = $config.uri.dashboard;
+               $http.get(url_briefmetrics, {cache:true}).success(function(data) {
+                    $scope.briefmetrics = data;
                     angular.forEach(data.hits.hits, function(sys) {
                         var chartData = sys._source;
                         chartData.sort = function(a,b){
@@ -82,39 +76,28 @@ define(['./module'], function(controllers) {
                         node.dq = 0;
                         node.metrics = new Array();
                         angular.forEach($scope.dataData,function(metric,index){
-                            if(sys.assetMap.indexOf(metric[metric.length-1]._source.name)!= -1){
+                            if(sys.assetMap.indexOf(metric[0]._source.name)!= -1){
                                 var metricNode = new Object();
-                                var dq = 0.0;
-                                if (metric[metric.length-1]._source.total > 0)
-                                    dq = metric[metric.length-1]._source.matched/metric[metric.length-1]._source.total*100;
-                                metricNode.dq = dq;
-                                metricNode.name = metric[metric.length-1]._source.name;
-                                metricNode.timestamp = metric[metric.length-1]._source.tmst;
+                                metricNode.name = metric[0]._source.name;
+                                metricNode.timestamp = metric[0]._source.tmst;
+                                metricNode.dq = metric[0]._source.matched/metric[0]._source.total*100;
                                 metricNode.details = angular.copy(metric);
                                 node.metrics.push(metricNode);
                             }
                         })
                         $scope.finalData.push(node);
                     })
+//            if(!sysName){
+//              $scope.backup_metrics = angular.copy(res);
+//            }
 
-                    $scope.originalData = angular.copy($scope.finalData);
-
-                    if($routeParams.sysName && $scope.originalData && $scope.originalData.length > 0){
-                      for(var i = 0; i < $scope.originalData.length; i ++){
-                        if($scope.originalData[i].name == $routeParams.sysName){
-                          $scope.selectedOrgIndex = i;
-                          $scope.changeOrg();
-                          $scope.orgSelectDisabled = true;
-                          break;
-                        }
-
-                      }
-                    }
                     $timeout(function() {
                         redraw($scope.finalData);
                     });
+                    $scope.originalData = angular.copy($scope.finalData);
                 });
-            });//          $http.post(url_dashboard, {"query": {"match_all":{}},"size":1000}).success(function(res) {
+            });
+//          $http.post(url_dashboard, {"query": {"match_all":{}},"size":1000}).success(function(res) {
         }
 
         $scope.$watch('selectedOrgIndex', function(newValue){
@@ -157,7 +140,7 @@ define(['./module'], function(controllers) {
 
         $scope.changeAsset = function() {
             $scope.finalData = [];
-            if($scope.selectedOrgIndex === ""){
+            if($scope.selectedOrgIndex == ""){
               $scope.finalData = angular.copy($scope.originalData);
             } else {
               var org = angular.copy($scope.originalData[$scope.selectedOrgIndex]);
@@ -196,8 +179,7 @@ define(['./module'], function(controllers) {
 
         /*click the chart to be bigger*/
         $scope.showBig = function(t){
-            // $rootScope.showBigChart($barkChart.getOptionBig(t));
-             window.location.href = '/#!/detailed/'+t.name;
+            $rootScope.showBigChart($barkChart.getOptionBig(t));
         }
 
         $scope.getSample = function(item) {
